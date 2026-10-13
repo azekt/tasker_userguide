@@ -1,0 +1,1598 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		/* General Body and Container Styles */
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			line-height: 1.6;
+			background-color: #f8f9fa;
+			color: #343a40;
+			margin: 0;
+			padding: 0;
+		}
+
+		/* Layout & Sidebar */
+		.layout {
+			display: grid;
+			grid-template-columns: 260px 1fr;
+			min-height: 100vh;
+		}
+
+		.sidebar {
+			background-color: #ffffff;
+			border-right: 1px solid #dee2e6;
+			position: sticky;
+			top: 0;
+			height: 100vh;
+			overflow-y: auto;
+			padding-top: 24px;
+			box-sizing: border-box;
+		}
+
+		.sidebar-header {
+			font-size: 1.2em;
+			font-weight: 700;
+			color: #212529;
+			padding: 0 24px 16px;
+			margin-bottom: 12px;
+			border-bottom: 1px solid #e9ecef;
+		}
+
+		.nav-link {
+			display: block;
+			padding: 8px 24px;
+			color: #495057;
+			text-decoration: none;
+			font-size: 0.95em;
+			border-left: 4px solid transparent;
+			transition: background-color 0.2s, color 0.2s;
+		}
+
+		.nav-link:hover {
+			background-color: #f8f9fa;
+			color: #007bff;
+			text-decoration: none;
+		}
+
+		.nav-link.active {
+			background-color: #e9ecef;
+			border-left-color: #007bff;
+			color: #007bff;
+			font-weight: 600;
+		}
+
+		.content-wrapper {
+			padding: 16px;
+			min-height: 0;
+			overflow-y: auto;
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 0 auto;
+			background-color: #ffffff;
+			padding: 24px 32px;
+			border-radius: 8px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		}
+
+		/* Mobile Header */
+		.mobile-header {
+			display: none;
+		}
+
+		.hamburger {
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: #343a40;
+			padding: 0;
+		}
+
+		.sidebar-overlay {
+			display: none;
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.4);
+			z-index: 999;
+		}
+
+		.search-input {
+			width: 100%;
+			border-radius: 20px;
+			background-color: #f8f9fa;
+			border: 1px solid #dee2e6;
+			padding: 8px 16px;
+			color: #495057;
+			font-size: 0.9em;
+			box-sizing: border-box;
+			font-family: inherit;
+		}
+
+		.search-input:focus {
+			outline: 2px solid #007bff;
+			outline-offset: -2px;
+			background-color: #ffffff;
+		}
+
+		.hidden {
+			display: none !important;
+		}
+
+		@media (max-width: 768px) {
+			.layout {
+				grid-template-columns: 1fr;
+			}
+
+			.sidebar {
+				position: fixed;
+				left: 0;
+				top: 0;
+				transform: translateX(-100%);
+				z-index: 1000;
+				transition: transform 0.3s ease;
+			}
+
+			.sidebar.open {
+				transform: translateX(0);
+			}
+
+			.sidebar-overlay.visible {
+				display: block;
+			}
+
+			.mobile-header {
+				display: flex;
+				align-items: center;
+				background-color: #ffffff;
+				padding: 12px 16px;
+				border-radius: 8px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+				margin-bottom: 16px;
+				max-width: 900px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.mobile-title {
+				font-size: 1.2em;
+				font-weight: bold;
+				margin-left: 12px;
+			}
+		}
+
+		/* Typography */
+		h4 {
+			font-size: 2em;
+			font-weight: 700;
+			color: #212529;
+			border-bottom: 2px solid #dee2e6;
+			padding-bottom: 12px;
+			margin-top: 0;
+			margin-bottom: 24px;
+		}
+
+		p {
+			margin-top: 0;
+			margin-bottom: 1em;
+		}
+
+		a {
+			color: #007bff;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		/* Section Styling */
+		.section {
+			margin-top: 32px;
+			border-top: 1px solid #e9ecef;
+			padding-top: 32px;
+			scroll-margin-top: 24px;
+		}
+
+		.section-title {
+			font-size: 1.5em;
+			font-weight: 600;
+			color: #343a40;
+			margin-bottom: 12px;
+		}
+
+		/* Lists */
+		ul {
+			padding-left: 20px;
+			margin-top: 8px;
+		}
+
+		li {
+			margin-bottom: 20px;
+		}
+
+		/* Method Definitions in Lists */
+		li>code {
+			font-weight: bold;
+			font-size: 1.1em;
+			color: #333;
+			display: inline-block;
+			margin-bottom: 4px;
+		}
+
+		/* Inline Code and Code Blocks */
+		code {
+			font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+			font-size: 0.95em;
+		}
+
+		p code,
+		li code,
+		td code {
+			background-color: #e9ecef;
+			padding: 3px 6px;
+			border-radius: 4px;
+		}
+
+		pre {
+			background-color: #282c34;
+			color: #abb2bf;
+			padding: 16px;
+			border-radius: 6px;
+			overflow-x: auto;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+
+		/* Warning & Critical Info Styling */
+		.grave-danger {
+			background-color: #fff8e1;
+			border-left: 5px solid #ffc107;
+			color: #594b2d;
+			padding: 16px 20px;
+			border-radius: 4px;
+			margin: 20px 0;
+			font-weight: normal;
+		}
+
+		.grave-danger h5 {
+			margin-top: 0;
+			margin-bottom: 8px;
+			font-size: 1.1em;
+			font-weight: bold;
+			color: #c58700;
+		}
+
+		.grave-danger ul {
+			margin-bottom: 0;
+		}
+
+		.grave-danger li {
+			margin-bottom: 10px;
+		}
+
+		/* Final Example Section */
+		.example-section {
+			margin-top: 32px;
+			padding: 24px;
+			background-color: #f8f9fa;
+			border: 1px solid #dee2e6;
+			border-radius: 8px;
+			scroll-margin-top: 24px;
+		}
+
+		.example-section .section-title {
+			font-size: 1.2em;
+			margin-top: 16px;
+			margin-bottom: 10px;
+		}
+
+		/* Method List Styling */
+		.method-list {
+			list-style-type: none;
+			padding-left: 0;
+			margin-top: 24px;
+		}
+
+		.method-item {
+			background-color: #f8f9fa;
+			border: 1px solid #dee2e6;
+			border-radius: 8px;
+			padding: 20px;
+			margin-bottom: 24px;
+		}
+
+		.method-item>code:first-of-type {
+			font-weight: bold;
+			font-size: 1.2em;
+			color: #212529;
+			display: block;
+			margin-bottom: 12px;
+			background-color: transparent;
+			padding: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="layout">
+		<nav class="sidebar" id="sidebar">
+			<div class="sidebar-header">
+				<div style="margin-bottom: 12px;">Contents</div>
+				<input type="search" id="search" placeholder="Search..." class="search-input" aria-label="Search documentation">
+			</div>
+			<div class="sidebar-nav">
+				<a href="#introduction" class="nav-link" data-section="introduction">Introduction</a>
+				<a href="#ai-helper" class="nav-link" data-section="ai-helper">AI Code Helper</a>
+				<a href="#available-variables" class="nav-link" data-section="available-variables">Available Variables</a>
+				<a href="#function-index" class="nav-link" data-section="function-index">Function Index</a>
+				<a href="#third-party-libraries" class="nav-link" data-section="third-party-libraries">Third-Party Libraries</a>
+				<a href="#async-rxjava" class="nav-link" data-section="async-rxjava">Asynchronous Operations with RxJava</a>
+				<a href="#return-value" class="nav-link" data-section="return-value">Return Value</a>
+				<a href="#variable-typing" class="nav-link" data-section="variable-typing">Variable Typing and Scope</a>
+				<a href="#example" class="nav-link" data-section="example">Example</a>
+			</div>
+		</nav>
+
+		<div class="content-wrapper">
+			<div class="mobile-header">
+				<button class="hamburger" id="hamburger">☰</button>
+				<span class="mobile-title">Java Code</span>
+			</div>
+
+			<div class="container" id="content">
+				<div class="section" id="introduction" style="margin-top: 0; border-top: none; padding-top: 0;">
+					<h4><span class="name">Java Code</span></h4>
+					<p>
+						Allows you to write and execute arbitrary <b>Java code</b>. The code is interpreted by the <b><a href="https://beanshell.org/manual/bshmanual.html">BeanShell</a></b> interpreter, which uses a syntax similar to older versions of Java (pre-Java 5).
+					</p>
+				</div>
+
+				<div class="section" id="ai-helper">
+					<div class="section-title">AI Code Helper</div>
+					<p>
+						Click the <b>magnifying glass icon</b> next to the code field to get help writing your code. You can use the built-in AI to generate the code for you directly in the editor, or you can copy the system instructions to use with your preferred external AI (like ChatGPT, Gemini, etc.).
+					</p>
+				</div>
+
+				<div class="section" id="available-variables">
+					<div class="section-title">Available Variables</div>
+					<p>
+						Two special variables are always available for you to use in your code: <code>context</code> and <code>tasker</code>.
+					</p>
+					<p>
+						The <code>context</code> variable is an Android <b>Context</b> object from a Service. Because it is not from an Activity, you <b>must</b> add the flag <code>FLAG_ACTIVITY_NEW_TASK</code> when starting new activities to avoid errors.
+					</p>
+					<p>
+						The <code>tasker</code> variable is a helper object that provides methods to interact with Tasker and the system. The available methods are:
+					</p>
+					<ul class="method-list">
+						<li class="method-item"><code>String getVariable(String name)</code>
+							<br>Reads a Tasker variable. The name must not include the '%' prefix. Returns <code>null</code> if the variable is not set.
+							<br><i>Example:</i> <code>String data = tasker.getVariable("http_data");</code>
+						</li>
+						<li class="method-item"><code>void setVariable(String name, Object value)</code>
+							<br>Sets a standard Tasker variable. The name must not include the '%' prefix. Passing <code>null</code> or an empty string clears the variable (same as <code>clearVariable</code>). The value will be converted to a string, except a <code>List</code> (or any other <code>Collection</code>) or a Java array, which is stored as a Tasker array: <code>tasker.setVariable("items", myList)</code> sets <code>%items1</code>, <code>%items2</code>, ... and clears any elements left over from before, so <code>%items(#)</code> is the size of the list. The scope (local/global) depends on the capitalization of the name. There is also a 3-argument override <code>setVariable(String name, Object value, boolean structureVariable)</code>: pass <code>true</code> when the value is structured data (JSON, HTML, XML or CSV) so Tasker parses it and you can read inner fields in later actions (e.g. <code>%myvar.field</code>).
+							<br><i>Example:</i> <code>tasker.setVariable("LastLocation", "Home");</code>
+						</li>
+						<li class="method-item"><code>void clearVariable(String name)</code>
+							<br>Clears a Tasker variable. The name must not include the '%' prefix. Same as calling <code>setVariable</code> with <code>null</code> or an empty string. The scope (local/global) depends on the capitalization of the name.
+							<br><i>Example:</i> <code>tasker.clearVariable("LastLocation");</code>
+						</li>
+						<li class="method-item"><code>void setJavaVariable(String name, Object value)</code>
+							<br>Sets a Java object variable that can be accessed by other Java actions. This is for passing complex data. The scope (local/global) depends on the capitalization of the name.
+							<br><i>Example:</i> <code>tasker.setJavaVariable("myList", new ArrayList());</code>
+						</li>
+						<li class="method-item"><code>Object getJavaVariable(String name)</code>
+							<br>Retrieves a Tasker Java Variable that was set in a previous action. Note that Java variables are automatically available by name at the start of the script, so you rarely need to call this explicitly unless you need to re-fetch a value during execution.
+							<div class="grave-danger">
+								<h5>Critical: Checking for `null` vs `void`</h5>
+								<p>In BeanShell, a variable that has not been set (e.g., an injected Java variable from a previous action that didn't run) is not `null`. It is a special value: `void`. If you only check `myVar == null`, your script will crash with an 'Undefined variable' error if `myVar` was never set. To safely check for the existence and non-null value of a variable, you <b>MUST</b> check for both conditions.</p>
+								<pre>
+/* Correct and Safe Example: */
+if (myInjectedVar == null || myInjectedVar == void) {
+    /* The variable is either not set or has been explicitly set to null. */
+    tasker.log("Variable is not available.");
+}
+
+/* Incorrect and Unsafe Example: */
+if (myInjectedVar == null) {
+    /* This line will CRASH if the variable was never set. */
+}
+</pre>
+							</div>
+						</li>
+						<li class="method-item"><code>java.util.Map&lt;java.lang.String, java.lang.Object&gt; getJavaVariables()</code>
+							<br>Gets a Map&lt;String,Object&gt; of both global and local Java variables. If there are variables with the same name, the local variables take precedence.
+						</li>
+						<li class="method-item"><code>java.util.Map&lt;java.lang.String, java.lang.Object&gt; getLocalJavaVariables()</code>
+							<br>Gets a Map&lt;String,Object&gt; of the local Java variables available in the current task. These do not include global variables.
+						</li>
+						<li class="method-item"><code>java.util.Map&lt;java.lang.String, java.lang.Object&gt; getGlobalJavaVariables()</code>
+							<br>Gets a Map&lt;String,Object&gt; of the global Java variables available that can be accessed in any Task in Tasker. These do not include local task variables.
+						</li>
+						<li class="method-item"><code>void clearGlobalJavaVariables()</code>
+							<br>Clears all global Java objects from memory. This is important for managing memory if you use global Java objects extensively.
+							<br><i>Example:</i> <code>tasker.clearGlobalJavaVariables();</code>
+						</li>
+						<li class="method-item"><code>void log(String message, ...)</code>
+							<br>Writes a debug message to the Tasker log which is sent to the system log or external storage, depending on what you enabled in Tasker Preferences. This is the only correct way to log from your code. Do not use <code>System.out.println()</code>.
+							<br>This method has several overrides:
+							<ul style="margin-top: 8px;">
+								<li><code>log(String message)</code></li>
+								<li><code>log(String message, String filePath)</code></li>
+								<li><code>log(String message, String filePath, String level)</code></li>
+								<li><code>log(String message, String filePath, String level, String tag)</code></li>
+							</ul>
+							<br><i>Example:</i> <code>tasker.log("Processing item number " + i);</code>
+						</li>
+						<li class="method-item"><code>Disposable logAndToast(CharSequence message, ...)</code>
+							<br>Calls the <code>log()</code> function followed by <code>showToast()</code> with the provided text. Useful for debugging when you need immediate on-screen feedback.
+							<ul style="margin-top: 8px;">
+								<li><code>logAndToast(CharSequence message)</code></li>
+								<li><code>logAndToast(CharSequence message, String filePath)</code></li>
+							</ul>
+							<br><i>Example:</i> <code>tasker.logAndToast("Operation Complete");</code>
+						</li>
+						<li class="method-item"><code>Disposable showToast(CharSequence text, ... )</code>
+							<br>Shows a simple on-screen toast. This method has three available overrides:
+							<ul style="margin-top: 8px;">
+								<li><code>showToast(CharSequence text)</code>: Standard toast.</li>
+								<li><code>showToast(CharSequence text, CharSequence title)</code>: Toast with a title.</li>
+								<li><code>showToast(CharSequence text, CharSequence title, Drawable icon)</code>: Toast with a title and an icon.</li>
+							</ul>
+							<br><i>Example:</i> <code>tasker.showToast("Hello World");</code>
+						</li>
+						<li class="method-item"><code>IBinder getShizukuService(String name)</code>
+							<br>Gets a system service via Shizuku for privileged operations. <span class="grave-danger" style="padding: 2px 6px; display:inline; border-width: 1px;">This will cause an error if Shizuku is not available.</span>
+							<br><i>Example:</i> <code>IBinder cs = tasker.getShizukuService("clipboard");</code>
+						</li>
+						<li class="method-item"><code>NotificationListenerService getNotificationListener()</code>
+							<br>Gets the bound Notification Listener service to interact with notifications. Returns <code>null</code> if the service is not available, so your code must handle this.
+							<br><i>Example:</i> <code>if (tasker.getNotificationListener() != null) { ... }</code>
+						</li>
+						<li class="method-item"><code>Observable&lt;NotificationUpdate&gt; getNotificationUpdates()</code>
+							<br>Returns an RxJava2 Observable of <code>com.joaomgcd.taskerm.helper.NotificationUpdate</code> events. You can subscribe to this stream to react to notification changes in real-time.
+							<br>The <code>NotificationUpdate</code> object has exactly two methods:
+							<ul style="margin-top: 8px;">
+								<li><code>boolean getCreated()</code>: Returns <code>true</code> if the notification was posted (created), and <code>false</code> if the notification was removed.</li>
+								<li><code>android.service.notification.StatusBarNotification getStatusBarNotification()</code>: Returns the <code>android.service.notification.StatusBarNotification</code> object that was either posted or removed.</li>
+							</ul>
+						</li>
+						<li class="method-item"><code>boolean callTask(String taskName, HashMap params)</code>
+							<br>Runs a Tasker task by name, optionally passing parameters.
+							<p>This method asynchronously starts the specified task. It returns <code>true</code> if the task was successfully queued to run, and <code>false</code> otherwise. It does <b>not</b> wait for the task to complete and does not provide a result from the task. A 3-argument override <code>callTask(String taskName, HashMap params, int priority)</code> runs the task at a specific priority; higher numbers win when several tasks are queued on Tasker's single work thread.</p>
+							<b>Parameters:</b>
+							<ul style="margin-top: 8px;">
+								<li><b><code>taskName</code></b>: The exact name of the Tasker task to run.</li>
+								<li><b><code>params</code></b>: A <code>HashMap</code> where keys are local variable names (without the '%' prefix) and values are the string values to pass to the task. Can be <code>null</code> if no parameters are needed.</li>
+							</ul>
+							<b>Example: Running a task with parameters</b>
+							<pre>
+import java.util.HashMap;
+
+/* Create a map to hold the parameters. */
+params = new HashMap();
+params.put("device_name", "Living Room TV");
+params.put("command", "volume_up");
+
+/* Call the 'Control Device' task with the specified parameters. */
+boolean started = tasker.callTask("Control Device", params);
+
+if (started) {
+    tasker.log("Successfully started the 'Control Device' task.");
+} else {
+    tasker.log("Failed to start the 'Control Device' task.");
+}
+</pre>
+						</li>
+						<li class="method-item"><code>String sendCommand(String command)</code>
+							<br>Sends a command that can trigger the "Command" event in Tasker, allowing you to trigger other profiles or tasks. Equivalent to using the "Command" action.
+							<br><i>Example:</i> <code>tasker.sendCommand("my_custom_command=:=value");</code>
+						</li>
+						<li class="method-item"><code>AccessibilityService getAccessibilityService()</code>
+							<br>Returns an instance of Tasker's accessibility service if it's running. Returns <code>null</code> otherwise.
+							<br>This service object includes the helper method <code>List&lt;AccessibilityNodeInfo&gt; getChildrenRecursive(AccessibilityNodeInfo node)</code> to easily retrieve all child elements. You can use it with <code>accessibilityService.getRootInActiveWindow()</code> to get all elements on the screen.
+							<br><i>Example:</i> <code>if (tasker.getAccessibilityService() != null) { ... }</code>
+						</li>
+						<li class="method-item"><code>Observable&lt;AccessibilityEvent&gt; getAccessibilityEvents()</code>
+							<br>Returns an RxJava2 Observable of Accessibility events. You can subscribe to this stream to detect and react to UI changes, clicks, and text changes across the system.
+							<p style="margin-top: 16px;"><b>Example: Creating a background text monitor</b></p>
+							<p>This example creates a persistent monitor that toasts any text typed into an EditText field in any app. It uses a global Java variable to handle cleanup so you can stop it later.</p>
+							<pre>
+import android.view.accessibility.AccessibilityEvent;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
+import io.reactivex.functions.Action;
+import io.reactivex.subjects.CompletableSubject;
+import java.util.List;
+import com.joaomgcd.taskerm.action.java.JavaCodeException;
+
+/* 
+ * Clean up any previous instance of this script by triggering the old signal.
+ * We use getJavaVariable safely to check if the global variable exists.
+ */
+oldSignal = tasker.getJavaVariable("accKillSignal");
+if (oldSignal != null &amp;&amp; oldSignal != void) oldSignal.onComplete();
+
+/* Create a new kill signal subject. */
+killSignal = CompletableSubject.create();
+
+/* 
+ * Store it as a Global Java Variable.
+ * Another task can retrieve this using 'accKillSignal' and call .onComplete() to stop this monitor.
+ */
+tasker.setJavaVariable("accKillSignal", killSignal);
+
+/* Get the event stream. */
+events = tasker.getAccessibilityEvents();
+if (events == null) throw new JavaCodeException("Accessibility Service not available.");
+
+/* 
+ * Subscribe using takeUntil to handle the stop signal.
+ * Use doFinally to clean up the global variable when the subscription ends.
+ */
+disposable = events.takeUntil(killSignal.toObservable())
+    .doFinally(new Action() {
+        run() {
+            /* Clear the global variables so they don't linger in memory. */
+            tasker.setJavaVariable("accKillSignal", null);
+			tasker.setJavaVariable("accDisposable", null);
+        }
+    })
+    .filter(new Predicate() {
+    boolean test(Object obj) {
+        AccessibilityEvent event = (AccessibilityEvent) obj;
+        
+        /* Filter for text changes. */
+        if (event.getEventType() != AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED) return false;
+
+        /* Filter for EditText. */
+        if (event.getClassName() == null) return false;
+        if (!"android.widget.EditText".contentEquals(event.getClassName())) return false;
+
+        return true;
+    }
+}).subscribe(new Consumer() {
+    accept(Object obj) {
+        AccessibilityEvent event = (AccessibilityEvent) obj;
+        List textList = event.getText();
+        
+        /* Check for valid text. */
+        if (textList == null) return;
+        if (textList.isEmpty()) return;
+        
+        tasker.showToast("Input: " + textList.get(0));
+    }
+});
+/* CRITICAL: Store the subscription in a global variable so it's not garbage collected */
+tasker.setJavaVariable("accDisposable", disposable);
+</pre>
+							<p><b>Example: Stopping the monitor</b></p>
+							<p>Run this code in a separate action (or task) to stop the monitor created above.</p>
+							<pre>
+import io.reactivex.subjects.CompletableSubject;
+
+/* Retrieve the global signal variable. */
+killSignal = tasker.getJavaVariable("accKillSignal");
+
+/* Check if it exists and is valid. */
+if (killSignal != null &amp;&amp; killSignal != void) {
+    /* Trigger completion. This stops the subscription in the other task. */
+    killSignal.onComplete();
+    tasker.showToast("Monitor Stopped");
+} else {
+    tasker.showToast("Monitor was not running");
+}
+</pre>
+						</li>
+						<li class="method-item"><code>Observable&lt;Intent&gt; getBroadcasts(IntentFilter intentFilter)</code>
+							<br>Returns an RxJava2 Observable that emits every broadcast <code>Intent</code> matching the given <code>IntentFilter</code>. Tasker registers the receiver when you subscribe and unregisters it when the subscription is disposed, so you never create or unregister a <code>BroadcastReceiver</code> yourself. Sticky broadcasts (like <code>Intent.ACTION_BATTERY_CHANGED</code>) emit their current value right away. The Observable never completes, and everything after it in the chain runs on a background thread.
+							<br>For a long-running background monitor, use the same kill switch pattern shown for <code>getAccessibilityEvents()</code> above.
+							<p style="margin-top: 16px;"><b>Example: Read the current battery level</b></p>
+							<pre>
+import android.content.Intent;
+import android.content.IntentFilter;
+
+/* ACTION_BATTERY_CHANGED is sticky, so the current value arrives immediately. */
+battery = tasker.getBroadcasts(new IntentFilter(Intent.ACTION_BATTERY_CHANGED)).blockingFirst();
+return battery.getIntExtra("level", -1);
+</pre>
+							<p><b>Example: Wait for the screen to turn off</b></p>
+							<pre>
+import android.content.Intent;
+import android.content.IntentFilter;
+import java.util.concurrent.TimeUnit;
+
+/* Waits up to 60 seconds; if the screen doesn't turn off in time, the action fails with a timeout error. */
+tasker.getBroadcasts(new IntentFilter(Intent.ACTION_SCREEN_OFF))
+    .timeout(60, TimeUnit.SECONDS)
+    .blockingFirst();
+</pre>
+						</li>
+						<li class="method-item"><code>Observable&lt;JavaCodeSensorEvent&gt; getSensorEvents(int sensorType)</code>, <code>getSensorEvents(int sensorType, int samplingPeriodUs)</code>, <code>getSensorEvents(int sensorType, int samplingPeriodUs, boolean wakeUp)</code>, <code>getSensorEvents(String sensorName)</code>, <code>getSensorEvents(String sensorName, int samplingPeriodUs)</code>
+							<br>Returns an RxJava2 Observable of readings from the device's default sensor of the given type (a <code>Sensor.TYPE_...</code> constant). Each reading has the same public fields as Android's <code>SensorEvent</code> (<code>values</code>, <code>accuracy</code>, <code>timestamp</code>, <code>sensor</code>), but it's a copy, so it's safe to keep. Tasker registers the listener when you subscribe and unregisters it when the subscription is disposed. One-shot sensors like <code>Sensor.TYPE_SIGNIFICANT_MOTION</code> work too and are re-armed after every trigger.
+							<br><code>samplingPeriodUs</code> is the delay between readings in microseconds or a <code>SensorManager.SENSOR_DELAY_...</code> constant (default <code>SENSOR_DELAY_NORMAL</code>). With <code>wakeUp</code> set to <code>true</code>, the wake-up version of the sensor is used, which wakes the device to deliver readings while the screen is off. To use one specific sensor (for example a secondary or wake-up sensor), pass its name as shown in the sensor list of the Any Sensor event instead of a type. The Observable fails if the device doesn't have the sensor, never completes, and everything after it in the chain runs on a background thread.
+							<br>Continuous sensors (like the accelerometer) report many times per second and use battery for as long as you're subscribed. For a long-running background monitor, use the same kill switch pattern shown for <code>getAccessibilityEvents()</code> above.
+							<p style="margin-top: 16px;"><b>Example: Read the light level once</b></p>
+							<pre>
+import android.hardware.Sensor;
+import java.util.concurrent.TimeUnit;
+
+/* Waits up to 5 seconds for a reading from the light sensor. */
+event = tasker.getSensorEvents(Sensor.TYPE_LIGHT)
+    .timeout(5, TimeUnit.SECONDS)
+    .blockingFirst();
+return event.values[0];
+</pre>
+						</li>
+						<li class="method-item"><code>Object implementClass(...)</code>
+							<br>Dynamically extends or implements any class (concrete or abstract) to intercept its method calls. This is a powerful tool for adding logging, modifying behavior, or handling abstract classes where traditional anonymous classes fail in BeanShell.
+							<ul>
+								<li><b>How it works:</b> You provide a class to extend (e.g., <code>Intent.class</code>) and an implementation of the <code>ClassImplementation</code> interface. Your implementation's <code>run</code> method will be called for <em>every</em> method invoked on the created object.</li>
+								<li><b>Handler Interface:</b> Your handler must implement <code>com.joaomgcd.taskerm.action.java.ClassImplementation</code>. Remember to import this class at the top of your script.</li>
+								<li><b>The <code>run</code> method parameters:</b>
+									<ul>
+										<li><code><b>Callable superCaller</b></code>: This is the most important parameter. It is a handle to the original method that was called. To execute the original method, you <b>must</b> call <code>superCaller.call()</code>. The value returned by <code>.call()</code> is the original method's return value. This allows you to run code <em>before</em> or <em>after</em> the original logic.</li>
+										<li><code><b>String methodName</b></code>: The name of the method being called (e.g., <code>"putExtra"</code>).</li>
+										<li><code><b>Object[] args</b></code>: An array of arguments passed to that method.</li>
+									</ul>
+								</li>
+								<li><span class="grave-danger" style="padding: 2px 6px; display:inline; border-width: 1px;"><b>CRITICAL SYNTAX RULE:</b></span> Due to a BeanShell limitation, you <b>MUST</b> write the <code>run</code> method signature without a return type or access modifier. The line must be written literally as <code>run(Callable superCaller, String methodName, Object[] args){ ... }</code>.</li>
+							</ul>
+							<h5 style="margin-top:20px; font-weight:bold;">Signatures</h5>
+							<p><b>1. Basic Implementation (No-Argument Constructor)</b></p>
+							<code>Object implementClass(java.lang.Class&lt;?&gt;, com.joaomgcd.taskerm.action.java.ClassImplementation)</code>
+							<p style="margin-top:12px;"><b>2. Implementation with Specific Constructor</b></p>
+							<code>Object implementClass(java.lang.Class&lt;?&gt;, com.joaomgcd.taskerm.action.java.ClassImplementation, java.lang.Class&lt;?&gt;[], java.lang.Object[])</code>
+							<h5 style="margin-top:20px; font-weight:bold;">Example 1: Logging method calls on a concrete class</h5>
+							<pre>
+/* Import the necessary classes. */
+import com.joaomgcd.taskerm.action.java.ClassImplementation;
+import android.content.Intent;
+import java.util.concurrent.Callable;
+
+/* Create a proxied Intent object. */
+intent = tasker.implementClass(Intent.class, new ClassImplementation(){
+    run(Callable superCaller, String methodName, Object[] args){
+        tasker.log("Method Logger: about to call " + methodName);
+        
+        /* Execute the original method and capture its result. */
+        Object result = superCaller.call();
+
+        tasker.log("Method Logger: finished " + methodName +". Got result: " + result);
+        
+        /* Return the original result to preserve functionality. */
+        return result;
+    }
+});
+
+/* 
+ * Now, when you use this 'intent' object, every method call will be logged.
+*/
+intent.putExtra("aaa","coool");
+intent.getStringExtra("aaa");
+							</pre>
+							<h5 style="margin-top:20px; font-weight:bold;">Example 2: Implementing an abstract <code>BroadcastReceiver</code></h5>
+							<pre>
+import com.joaomgcd.taskerm.action.java.ClassImplementation;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.content.Intent;
+import java.util.concurrent.Callable;
+import io.reactivex.subjects.CompletableSubject;
+
+screenOffSignal = CompletableSubject.create();
+filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+
+screenOffReceiver = tasker.implementClass(BroadcastReceiver.class, new ClassImplementation(){
+    run(Callable superCaller, String methodName, Object[] args){
+        /* 
+         * Check for the specific abstract method we want to implement.
+         * For any other method, we MUST call superCaller to preserve
+         * the original behavior (e.g., for toString(), equals(), etc.).
+        */
+        if (!methodName.equals("onReceive")) {
+            return superCaller.call();
+        }
+        
+        /* This is our custom implementation for the 'onReceive' method. */
+        tasker.log("Screen just went OFF!");
+        screenOffSignal.onComplete();
+        return null; /* onReceive is a void method. */
+    }
+});
+
+context.registerReceiver(screenOffReceiver, filter);
+
+try {
+    screenOffSignal.blockingAwait();    
+    tasker.log("...Signal received!");
+} finally {
+    context.unregisterReceiver(screenOffReceiver);
+}
+							</pre>
+							<h5 style="margin-top:20px; font-weight:bold;">Example 3: Using a specific constructor</h5>
+							<pre>
+import com.joaomgcd.taskerm.action.java.ClassImplementation;
+import android.widget.ArrayAdapter;
+import android.content.Context;
+import java.util.concurrent.Callable;
+
+// We want to call the ArrayAdapter(Context context, int resource, T[] objects) constructor.
+constructorTypes = new Class[]{ Context.class, int.class, Object[].class };
+String[] myItems = new String[]{"Item 1", "Item 2", "Item 3"};
+constructorArgs = new Object[]{ context, android.R.layout.simple_list_item_1, myItems };
+
+myAdapter = tasker.implementClass(
+    ArrayAdapter.class, 
+    new ClassImplementation(){
+        run(Callable superCaller, String methodName, Object[] args){
+            if (methodName.equals("getCount")) {
+                tasker.log("ArrayAdapter.getCount() was called!");
+            }
+            return superCaller.call();
+        }
+    },
+    constructorTypes,
+    constructorArgs
+);
+
+tasker.log("Adapter count is: " + myAdapter.getCount());
+</pre>
+						</li>
+						<li class="method-item"><code>TaskForHelper getTask()</code>
+							<br>Gets an object with information about the currently running task.
+							<br>The <code>TaskForHelper</code> object has the following methods:
+							<ul style="margin-top: 8px;">
+								<li><code>String getName()</code>: Gets the name of the current task.</li>
+								<li><code>int getTaskId()</code>: Gets the ID of the running task.</li>
+								<li><code>int getProjectId()</code>: Gets the project ID that contains the task.</li>
+								<li><code>java.lang.Integer getProfileId()</code>: Gets the eventual profile id of the profile that launched the running task. May be null.</li>
+								<li><code>List&lt;ActionForHelper&gt; getActions()</code>: Gets a list of all actions in the task.</li>
+								<li><code>int getActionCount()</code>: Gets the number of actions in this task.</li>
+								<li><code>int getCurrentActionIndex()</code>: Gets the 0-based index of this Java Code action.</li>
+								<li><code>ActionForHelper getNextAction()</code>: Gets the next action in the task.</li>
+								<li><code>ActionForHelper getPreviousAction()</code>: Gets the previous action in the task.</li>
+							</ul>
+							The <code>ActionForHelper</code> object has the following methods:
+							<ul style="margin-top: 8px;">
+								<li><code>int getCode()</code>: Gets the action's internal code.</li>
+								<li><code>String getName()</code>: Gets the action's display name.</li>
+							</ul>
+						</li>
+						<li class="method-item"><code>Bundle getTaskVariables()</code>
+							<br>Gets a Bundle object containing all of the current task's variables.
+							<br><i>Example:</i> <code>Bundle vars = tasker.getTaskVariables();</code>
+						</li>
+						<li class="method-item"><code>String toJson(Object object, ...)</code>
+							<br>Converts a Java object into its JSON string representation.
+							<ul style="margin-top: 8px;">
+								<li><code>toJson(Object object)</code>: Converts to a compact, non-pretty JSON string.</li>
+								<li><code>toJson(Object object, boolean pretty)</code>: If <code>pretty</code> is <code>true</code>, the JSON will be formatted for readability.</li>
+							</ul>
+							<br><i>Example:</i> <code>String prettyJson = tasker.toJson(myObject, true);</code>
+						</li>
+						<li class="method-item"><code>void doWithActivity(Consumer consumer)</code>
+							<p><b>Prefer <code>doWithActivityUntilGone</code> for dialogs.</b> The example below hangs forever if the user presses HOME instead of answering: the button listener never runs, so <code>resultSignal</code> never completes and the task waits for ever. <code>doWithActivityUntilGone</code> does the same job, cannot hang, and finishes the Activity for you.</p>
+							<br>Runs code within a temporary Activity context.
+							<p>This is the solution for running APIs that require an `Activity` and will not work with the default `Service` context. A prime example is showing an `AlertDialog` or any other UI element, which will crash if attempted from a service.</p>
+							<b>How it works:</b>
+							<ol style="margin-top: 8px;">
+								<li>You provide a `java.util.function.Consumer` as the argument. You must import this class.</li>
+								<li>The function creates a temporary, invisible Activity behind the scenes.</li>
+								<li>It then calls your `Consumer`'s `accept(Activity activity)` method, giving you access to the live `Activity` instance.</li>
+								<li>Since this function uses a `Consumer`, it <b>does not return a value</b>. Its purpose is to <em>perform an action</em> with the Activity.</li>
+							</ol>
+							<div class="grave-danger">
+								<h5 style="margin-top:0; margin-bottom: 8px; font-size: 100%;">CRITICAL RULES — READ CAREFULLY</h5>
+								<ul style="margin-bottom: 0; margin-top: 0; padding-left: 20px;">
+									<li><b>Your Code Runs on the Main Thread:</b> The code inside your `Consumer` executes on the Android Main (UI) Thread. Any long-running operations will freeze the app's UI. You <b>must</b> use RxJava2 or start a new `Thread` to perform background work.</li>
+									<li><b>You MUST Finish the Activity:</b> You are responsible for closing the Activity. You <b>MUST</b> call <code>activity.finish()</code> inside your code when you are done. If you don't, the invisible activity will linger in the background. For asynchronous UI like a Dialog, this means calling <code>finish()</code> <b>inside the dialog's button listeners</b>.</li>
+								</ul>
+							</div>
+							<b>Example: Showing a Confirmation Dialog and Waiting for the Result</b>
+							<p>This example correctly demonstrates all the rules: it shows a dialog, pauses the script until the user clicks a button, and safely closes the temporary activity.</p>
+							<pre>
+import java.util.function.Consumer;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import io.reactivex.subjects.SingleSubject;
+
+/* Use a SingleSubject to wait for the dialog's result. */
+resultSignal = SingleSubject.create();
+
+/* Create a Consumer to build and show the dialog. */
+myActivityConsumer = new Consumer() {
+    accept(Object activity) {
+        final Activity currentActivity = (Activity) activity;
+
+        onClickListener = new DialogInterface.OnClickListener() {
+            onClick(DialogInterface dialog, int which) {
+                String result = "cancel";
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    result = "ok";
+                }
+                resultSignal.onSuccess(result);
+                currentActivity.finish(); /* CRITICAL: Finish activity here! */
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(currentActivity);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Do you want to proceed?");
+        builder.setPositiveButton("OK", onClickListener);
+        builder.setNegativeButton("Cancel", onClickListener);
+        builder.setCancelable(false);
+        builder.create().show();
+    }
+};
+
+/* Execute the consumer to show the dialog. */
+tasker.doWithActivity(myActivityConsumer);
+
+/* Block the script and wait for the signal from the button listener. */
+userChoice = resultSignal.blockingGet();
+
+return userChoice;
+</pre>
+						</li>
+						<li class="method-item"><code>void doWithActivity(Consumer consumer, boolean showInRecents)</code>
+							<br>Like <code>doWithActivity(consumer)</code>, but with <code>showInRecents</code> set to <code>true</code> the Activity is listed in the Android recents screen. The user can leave it (for example with HOME), come back to it from recents with everything the consumer set up still there, or close it by swiping it away. Use it for Activities the user keeps open and returns to.
+							<p>If Android closes Tasker in the background while the Activity is not visible, opening it from recents closes it instead of showing it again, because the script that set it up is no longer running.</p>
+						</li>
+						<li class="method-item"><code>String doWithActivityUntilGone(Consumer consumer, long timeoutMs)</code>
+							<br>Like <code>doWithActivity</code>, but <b>blocks until the temporary Activity goes away</b>. This is the safe way to show a dialog and wait for an answer, and it <b>finishes the Activity for you</b> so it can never be left lingering in the background.
+							<p><code>doWithActivity</code> on its own has a trap: if you show a dialog, block on a <code>SingleSubject</code> waiting for a button, and the user presses HOME instead of answering, the button listener never fires and <b>your task waits forever</b>. This method removes that failure mode.</p>
+							<b>Returns</b> the reason it ended:
+							<ul style="margin-top: 8px;">
+								<li><code>"Destroyed"</code>: the Activity was finished, normally by your own <code>activity.finish()</code> when the dialog is dismissed.</li>
+								<li><code>"UserLeaveHint"</code>: the user pressed home or recents.</li>
+								<li><code>"Timeout"</code>: <code>timeoutMs</code> elapsed first.</li>
+								<li><code>"Error"</code>: the Activity could not be launched.</li>
+							</ul>
+							<p><code>timeoutMs</code> is the maximum wait in milliseconds; pass <code>0</code> for no timeout. <span class="grave-danger" style="padding: 2px 6px; display:inline; border-width: 1px;">Always pass a real timeout as a safety net.</span> An <code>AlertDialog</code> consumes the back key itself, so BACK dismisses the dialog without finishing the Activity and fires no lifecycle event on its own. Cover it by wiring the dialog's own dismissal to <code>finish()</code>: the example's <code>setOnDismissListener</code> fires on button, BACK and tap-outside alike, so every exit finishes the Activity.</p>
+							<pre>
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import io.reactivex.subjects.SingleSubject;
+
+resultSignal = SingleSubject.create();
+
+myActivityConsumer = new java.util.function.Consumer() {
+    accept(Object activity) {
+        final Activity currentActivity = (Activity) activity;
+
+        onClickListener = new DialogInterface.OnClickListener() {
+            onClick(DialogInterface dialog, int which) {
+                result = "cancel";
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    result = "ok";
+                }
+                resultSignal.onSuccess(result);
+            }
+        };
+
+        builder = new AlertDialog.Builder(currentActivity);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Do you want to proceed?");
+        builder.setPositiveButton("OK", onClickListener);
+        builder.setNegativeButton("Cancel", onClickListener);
+
+        dialog = builder.create();
+        /* Finish here, not in the button listener: onDismiss fires on button, BACK and tap-outside, so every exit (including BACK) releases doWithActivityUntilGone. */
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            onDismiss(DialogInterface d) {
+                currentActivity.finish();
+            }
+        });
+        dialog.show();
+    }
+};
+
+/* Blocks until the user answers, presses home, or 30 seconds pass. It cannot hang. */
+tasker.doWithActivityUntilGone(myActivityConsumer, 30000);
+
+if (resultSignal.hasValue()) {
+    return resultSignal.getValue();
+}
+return "cancelled";
+</pre>
+						</li>
+						<li class="method-item"><code>Observable&lt;ActivityLifecycleEvent&gt; getActivityLifecycleEvents(Activity activity)</code>
+							<br>Returns an RxJava2 Observable of lifecycle events for an Activity you got from <code>doWithActivity</code>. Most scripts do not need this: prefer <code>doWithActivityUntilGone</code>.
+							<br>Each event has <code>getEventName()</code>, returning exactly one of <code>"Created"</code>, <code>"Started"</code>, <code>"Resumed"</code>, <code>"Paused"</code>, <code>"UserLeaveHint"</code>, <code>"Stopped"</code>, <code>"ConfigurationChanged"</code> or <code>"Destroyed"</code>, plus <code>getActivity()</code>. On <code>"Destroyed"</code> that Activity is already dead, so do not touch its UI.
+							<br>Every event also has all of the getters below, and they are safe to call on <i>any</i> event: they simply return <code>null</code> (or <code>false</code>) when they do not apply, so you cannot break the stream by calling the wrong one.
+							<ul style="margin-top: 8px;">
+								<li><code>android.os.Bundle getSavedInstanceState()</code>: set on <code>"Created"</code>, <code>null</code> otherwise. In practice null even there, because this Activity is not recreated on rotation.</li>
+								<li><code>android.content.res.Configuration getNewConfig()</code>: set on <code>"ConfigurationChanged"</code>, <code>null</code> otherwise. This one carries real data: it fires on every rotation.</li>
+								<li><code>boolean getChangingConfigurations()</code>: <code>true</code> on a <code>"Destroyed"</code> that is really a recreation.</li>
+							</ul>
+							<p><code>"Created"</code>, <code>"Started"</code> and <code>"Resumed"</code> are replayed, so you receive them even though they already happened by the time you were given the Activity. The stream completes on <code>"Destroyed"</code>.</p>
+							<p><span class="grave-danger" style="padding: 2px 6px; display:inline; border-width: 1px;">This is not a background monitor.</span> Unlike <code>getAccessibilityEvents</code>, this stream is scoped to one short-lived Activity and completes by itself: do not build a kill switch, do not use <code>takeUntil</code>, and do not store the <code>Disposable</code>. Your callback runs on the <b>main thread</b>, so never call <code>blockingFirst()</code> or <code>blockingSubscribe()</code> on it or you will freeze the app. Prefer the two-argument <code>subscribe(onNext, onError)</code>: if your callback throws, RxJava disposes the subscription and you stop receiving events.</p>
+							<pre>
+import io.reactivex.functions.Consumer;
+
+tasker.getActivityLifecycleEvents(currentActivity).subscribe(new Consumer() {
+    accept(Object event) {
+        if (event.getEventName().equals("ConfigurationChanged")) {
+            tasker.log("orientation is now " + event.getNewConfig().orientation);
+        }
+    }
+});
+</pre>
+						</li>
+						<li class="method-item"><code>Single&lt;Intent&gt; getWithActivityForResult(Intent intent)</code>
+							<br>Handles the `startActivityForResult` flow, returning a `Single&lt;Intent&gt;`.
+							<p>This is the standard way to get data from other apps that require user interaction, like picking a file, selecting a contact, or choosing an account.</p>
+							<b>How it works:</b>
+							<ol style="margin-top: 8px;">
+								<li>You provide an `Intent` that launches an activity designed to return a result (e.g., `new Intent(Intent.ACTION_GET_CONTENT)`).</li>
+								<li>The function starts that activity and <b>immediately returns a `Single&lt;Intent&gt;` object</b>.</li>
+								<li>This `Single` acts as a placeholder for the result. It will emit the final `Intent` object only after you complete the action in the other activity and it closes.</li>
+							</ol>
+							<b>What to do with the `Single&lt;Intent&gt;`:</b>
+							<p>You must subscribe to the `Single` to get the result. The most common way to do this is by using <code>.blockingGet()</code>, which pauses the script until the result is available.</p>
+							<b>Example: Basic Usage (Blocking immediately)</b>
+							<pre>
+import android.content.Intent;
+
+/* Create an intent to pick any file. */
+intent = new Intent(Intent.ACTION_GET_CONTENT);
+intent.setType("*/*");
+
+/* Start the activity and get the Single placeholder. */
+resultSingle = tasker.getWithActivityForResult(intent);
+
+/* Block the script and wait for the user to pick a file. */
+resultIntent = resultSingle.blockingGet();
+
+/* Extract the data (e.g., the file's URI) from the result. */
+fileUri = resultIntent.getData();
+return fileUri.toString();
+</pre>
+							<b>Example: Advanced Usage (Adding a Timeout)</b>
+							<p>The flexibility of returning a `Single` allows you to add operators like `timeout`.</p>
+							<pre>
+import android.content.Intent;
+import java.util.concurrent.TimeUnit;
+
+intent = new Intent(Intent.ACTION_GET_CONTENT);
+intent.setType("*/*");
+
+resultSingle = tasker.getWithActivityForResult(intent);
+
+try {
+    /* Wait for the result, but with a 30-second timeout. */
+    resultIntent = resultSingle.timeout(30, TimeUnit.SECONDS).blockingGet();
+    return resultIntent.getData().toString();
+} catch (Exception e) {
+    tasker.log("User did not pick a file within 30 seconds.");
+    return "timeout";
+}
+</pre>
+						</li>
+						<li class="method-item"><code>String convertToRealFilePath(Uri uri)</code>
+							<br><b>Attempts to convert a `content://` URI to a real, direct file path.</b>
+							<p><b>Use Case:</b> Android's modern security model often provides `content://` URIs instead of direct file paths (e.g., when you pick a file). This function acts as a bridge for tools or code that require a traditional, absolute path like `/storage/emulated/0/Download/MyFile.pdf`.</p>
+							<p class="grave-danger" style="padding: 12px 16px; border-width: 1px 1px 1px 5px;"><b>IMPORTANT:</b> This conversion is <b>not guaranteed to succeed</b> and may return `null`, especially if the URI points to a cloud file (like from Google Drive) or other virtual content. You <b>MUST</b> always check if the result is `null`.</p>
+							<b>Example: Picking a File and Getting Its Real Path</b>
+							<pre>
+import android.content.Intent;
+import android.net.Uri;
+
+/* 1. Get the result Intent from the file picker. */
+intent = new Intent(Intent.ACTION_GET_CONTENT);
+intent.setType("*/*");
+resultIntent = tasker.getWithActivityForResult(intent).blockingGet();
+
+if (resultIntent == null) return "User cancelled.";
+
+/* 2. Get the content URI from the result. */
+contentUri = resultIntent.getData();
+if (contentUri == null) return "Could not get file URI.";
+tasker.log("Got content URI: " + contentUri);
+
+/* 3. Attempt to convert the content URI to a real file path. */
+realPath = tasker.convertToRealFilePath(contentUri);
+
+/* 4. CRITICAL: Check if the conversion succeeded. */
+if (realPath != null) {
+    tasker.log("Successfully converted to real path: " + realPath);
+    return realPath;
+} else {
+    tasker.log("Failed to convert URI to a real path.");
+    return "Could not get real file path.";
+}
+</pre>
+						</li>
+						<li class="method-item"><code>void showSceneV2(String nameOrJson, ...)</code>
+							<br>Shows a Scene V2, identified either by its name or by inline scene JSON. The code continues immediately without waiting for any interaction. Use <code>showSceneV2ForResult</code> instead when you need to wait for the scene to be dismissed and read back its values.
+							<br>The available overrides let you set a Screen ID, a display mode and overlay options:
+							<ul style="margin-top: 8px;">
+								<li><code>showSceneV2(String nameOrJson)</code>: Shows the scene fullscreen.</li>
+								<li><code>showSceneV2(String nameOrJson, String screenId)</code>: Assigns a Screen ID. Use a unique id so you can later update or dismiss this specific scene.</li>
+								<li><code>showSceneV2(String nameOrJson, String screenId, String displayMode)</code>: <code>displayMode</code> is one of <code>'Fullscreen'</code>, <code>'Dialog'</code> or <code>'Overlay'</code>.</li>
+								<li><code>showSceneV2(String nameOrJson, String screenId, String displayMode, boolean showOverEverything, boolean longClickRootToDismiss)</code>: Overlay options. <code>showOverEverything</code> uses the Accessibility Overlay to draw over other overlays and some system windows; <code>longClickRootToDismiss</code> adds a long-press dismiss gesture on the root element. Only apply when <code>displayMode</code> is <code>'Overlay'</code>.</li>
+								<li><code>showSceneV2(String nameOrJson, String screenId, String displayMode, String x, String y)</code> and the variant with <code>String width, String height</code>: Overlay position and size. Values are in dp (e.g. <code>'100'</code>) or percentage (e.g. <code>'50%'</code>); use negative values to position from the opposite edge. Only apply when <code>displayMode</code> is <code>'Overlay'</code>.</li>
+								<li>Variants adding <code>boolean blocking</code> control whether the overlay blocks touches behind it (<code>true</code>) or lets them pass through (<code>false</code>), and the fullest variant also takes <code>showOverEverything</code> and <code>longClickRootToDismiss</code>.</li>
+							</ul>
+							<br><i>Example:</i> <code>tasker.showSceneV2("My Scene", "myScreen", "Overlay", "10", "10%");</code>
+						</li>
+						<li class="method-item"><code>Single&lt;Map&lt;String, List&gt;&gt; showSceneV2ForResult(String nameOrJson, ...)</code>
+							<br>Shows a Scene V2 and returns a <code>Single</code> that emits when the user dismisses the scene. The emitted <code>Map</code> keys are variable names and the values are lists of one or more values for each variable. Call <code>.blockingGet()</code> to wait for the result on the background thread, or <code>.subscribe()</code> for async handling.
+							<br>Overrides accept a Screen ID, a display mode, overlay position/size/blocking, the overlay options, and a timeout:
+							<ul style="margin-top: 8px;">
+								<li><code>showSceneV2ForResult(String nameOrJson)</code></li>
+								<li><code>showSceneV2ForResult(String nameOrJson, String screenId)</code></li>
+								<li><code>showSceneV2ForResult(String nameOrJson, String screenId, String displayMode)</code></li>
+								<li><code>showSceneV2ForResult(String nameOrJson, String screenId, String displayMode, long timeoutMs)</code>: <code>timeoutMs</code> is in milliseconds (<code>0</code> for no timeout). The <code>Single</code> errors if the timeout is exceeded.</li>
+								<li>Fuller overrides add overlay <code>x, y, width, height, blocking</code> (and <code>showOverEverything, longClickRootToDismiss</code>) before the final <code>timeoutMs</code>.</li>
+							</ul>
+							<br><i>Example:</i>
+							<pre>
+/* Show a login scene and wait for the user to submit it. */
+result = tasker.showSceneV2ForResult("Login Scene").blockingGet();
+
+/* result is a Map of variable name to a List of values. */
+usernames = result.get("username");
+if (usernames == null || usernames.isEmpty()) return null;
+return usernames.get(0);
+</pre>
+						</li>
+						<li class="method-item"><code>Single&lt;Map&lt;String, List&gt;&gt; waitForSceneV2Result(String screenId, ...)</code>
+							<br>Waits for an already-showing Scene V2 to be dismissed and returns a <code>Single</code> of the result map (variable name to list of values), exactly like <code>showSceneV2ForResult</code>. The scene must already be active. This is useful when one action shows the scene and a later action waits for its result.
+							<ul style="margin-top: 8px;">
+								<li><code>waitForSceneV2Result(String screenId)</code></li>
+								<li><code>waitForSceneV2Result(String screenId, long timeoutMs)</code>: <code>0</code> means no timeout; the <code>Single</code> errors if the timeout is exceeded.</li>
+							</ul>
+						</li>
+						<li class="method-item"><code>void dismissSceneV2(String screenId)</code>
+							<br>Dismisses a specific Scene V2 by its Screen ID.
+							<br><i>Example:</i> <code>tasker.dismissSceneV2("myScreen");</code>
+						</li>
+						<li class="method-item"><code>void dismissAllScenesV2()</code>
+							<br>Dismisses all currently active Scene V2 screens.
+							<br><i>Example:</i> <code>tasker.dismissAllScenesV2();</code>
+						</li>
+						<li class="method-item"><code>void updateSceneV2(String elementId, String property, String value, ...)</code>
+							<br>Updates a property of an element in an active Scene V2 while it is showing.
+							<ul style="margin-top: 8px;">
+								<li><code>updateSceneV2(String elementId, String property, String value)</code>: Updates the element in all currently active scenes.</li>
+								<li><code>updateSceneV2(String elementId, String property, String value, String screenId)</code>: Updates the element only in the given screen.</li>
+							</ul>
+							<br><i>Example:</i> <code>tasker.updateSceneV2("myButton", "text", "Hello");</code>
+						</li>
+						<li class="method-item"><code>void updateSceneV2Overlay(String screenId, String x, String y, ...)</code>
+							<br>Moves and resizes an overlay Scene V2 while it is showing. Position and size values are in dp (e.g. <code>'100'</code>) or percentage (e.g. <code>'50%'</code>).
+							<ul style="margin-top: 8px;">
+								<li><code>updateSceneV2Overlay(String screenId, String x, String y)</code>: Updates the position.</li>
+								<li><code>updateSceneV2Overlay(String screenId, String x, String y, String width, String height)</code>: Updates position and size.</li>
+								<li><code>updateSceneV2Overlay(String screenId, String x, String y, String width, String height, boolean blocking, int transitionDurationMs)</code>: Also sets touch blocking and an animation duration in milliseconds.</li>
+							</ul>
+						</li>
+						<li class="method-item"><code>boolean isSceneV2Active(String screenId)</code>
+							<br>Returns <code>true</code> if a Scene V2 with the given Screen ID is currently shown.
+							<br><i>Example:</i> <code>if (tasker.isSceneV2Active("myScreen")) { ... }</code>
+						</li>
+						<li class="method-item"><code>Observable&lt;SceneV2EventContext&gt; getSceneV2Events(...)</code>
+							<br>Returns an RxJava2 <code>Observable</code> of <code>SceneV2EventContext</code> events, emitted whenever a Scene V2 component is interacted with (clicked, toggled, swiped, and so on). Use <code>.subscribe()</code> for async monitoring or <code>.blockingFirst()</code> to wait for the next event.
+							<br>Each <code>SceneV2EventContext</code> has the fields: <code>sceneName</code>, <code>screenId</code>, <code>elementId</code>, <code>elementPath</code>, <code>elementValue</code>, <code>interactionType</code> and <code>outputVariables</code>.
+							<ul style="margin-top: 8px;">
+								<li><code>getSceneV2Events()</code>: Events from any scene.</li>
+								<li><code>getSceneV2Events(String screenId)</code>: Events from one screen.</li>
+								<li><code>getSceneV2Events(String screenId, String elementId)</code>: Events from one element of one screen.</li>
+							</ul>
+						</li>
+						<li class="method-item"><code>SceneV2EventContext waitForSceneV2Event(...)</code>
+							<br>Blocks until the next Scene V2 component interaction and returns its <code>SceneV2EventContext</code> (see <code>getSceneV2Events</code> for the available fields).
+							<ul style="margin-top: 8px;">
+								<li><code>waitForSceneV2Event()</code>: Waits for the next interaction in any scene.</li>
+								<li><code>waitForSceneV2Event(String screenId)</code>: Waits for the next interaction in one screen.</li>
+								<li><code>waitForSceneV2Event(String screenId, String elementId)</code>: Waits for the next interaction with one element.</li>
+							</ul>
+						</li>
+						<li class="method-item"><code>void setProfileEnabled(String profileName, boolean enabled)</code>
+							<br>Enables or disables all Tasker profiles with the given name, exactly like the "Profile Status" action. Throws a <code>JavaCodeException</code> if no profile with that name exists.
+							<br><i>Example:</i> <code>tasker.setProfileEnabled("My Profile", false);</code>
+						</li>
+						<li class="method-item"><code>void toggleProfileEnabled(String profileName)</code>
+							<br>Toggles the enabled state of all Tasker profiles with the given name, exactly like the "Profile Status" action set to Toggle. Throws a <code>JavaCodeException</code> if no profile with that name exists.
+							<br><i>Example:</i> <code>tasker.toggleProfileEnabled("My Profile");</code>
+						</li>
+						<li class="method-item"><code>CommandResult runShell(String command, ...)</code>
+							<br>Runs a shell command at the best available privilege, preferring Root, then Shizuku, then ADB WiFi, then a normal unprivileged shell. It returns a <code>com.joaomgcd.taskerm.shell.CommandResult</code> with these methods:
+							<ul style="margin-top: 8px;">
+								<li><code>int getExitCode()</code>: The command's exit code.</li>
+								<li><code>List getOutput()</code>: The standard output, as a list of lines.</li>
+								<li><code>String getOutputString()</code>: The standard output joined into a single newline-separated string (<code>null</code> if there was none).</li>
+								<li><code>List getError()</code>: The standard error, as a list of lines.</li>
+								<li><code>String getErrorString()</code>: The standard error joined into a single newline-separated string (<code>null</code> if there was none).</li>
+								<li><code>boolean getSuccess()</code>: <code>true</code> when the exit code is 0.</li>
+							</ul>
+							<br>The default timeout is 30 seconds. Use the two-argument override <code>runShell(String command, int timeoutSeconds)</code> for a different timeout; a <code>JavaCodeException</code> is thrown if the timeout is exceeded. To always run the command as Tasker itself (for example to read Tasker's own private files that the shell user behind Shizuku and ADB WiFi cannot), use <code>runShellTasker</code>.
+							<p class="grave-danger" style="padding: 12px 16px; border-width: 1px 1px 1px 5px;"><b>Backend differences:</b> The Root and normal-shell backends report <code>getExitCode()</code> as only 0 (success) or 1 (failure). The ADB WiFi backend reports <code>getExitCode()</code> as 0 and puts all output, including errors, in <code>getOutput()</code> with <code>getError()</code> empty. Only the Shizuku backend reports the real exit code, stdout and stderr separately.</p>
+							<br><i>Example:</i>
+							<pre>
+result = tasker.runShell("getprop ro.product.model");
+if (result.getSuccess()) return result.getOutputString();
+return "Failed with exit code " + result.getExitCode();
+</pre>
+						</li>
+						<li class="method-item"><code>CommandResult runShellTasker(String command, ...)</code>
+							<br>Runs a shell command as Tasker itself, a normal unprivileged shell running under Tasker's own user, and returns a <code>CommandResult</code> (see <code>runShell</code>). This behaves exactly like the built-in <b>Run Shell</b> action with Root and Shizuku off. Unlike <code>runShell</code>, it never escalates to Root, Shizuku or ADB WiFi, so it keeps Tasker's own identity and can read Tasker's own private files (for example under <code>/data/data/net.dinglisch.android.taskerm/</code>) that the shell user behind Shizuku and ADB WiFi cannot. The backend reports <code>getExitCode()</code> as only 0 or 1. A two-argument override <code>runShellTasker(String command, int timeoutSeconds)</code> sets a custom timeout (default 30 seconds).
+						</li>
+						<li class="method-item"><code>CommandResult runShellRoot(String command, ...)</code>
+							<br>Runs a shell command as root and returns a <code>CommandResult</code> (see <code>runShell</code>). It does <b>not</b> check whether root is available first; if it is not, the command simply fails in the returned result. Call <code>isRootAvailable()</code> first if you want to verify. The root backend reports <code>getExitCode()</code> as only 0 or 1. A two-argument override <code>runShellRoot(String command, int timeoutSeconds)</code> sets a custom timeout (default 30 seconds).
+						</li>
+						<li class="method-item"><code>CommandResult runShellShizuku(String command, ...)</code>
+							<br>Runs a shell command via Shizuku and returns a <code>CommandResult</code> (see <code>runShell</code>) with the real exit code, stdout and stderr. It does <b>not</b> check whether Shizuku is available first; call <code>isShizukuAvailable()</code> to verify. A two-argument override <code>runShellShizuku(String command, int timeoutSeconds)</code> sets a custom timeout (default 30 seconds).
+							<p class="grave-danger" style="padding: 12px 16px; border-width: 1px 1px 1px 5px;"><b>Note:</b> A Shizuku command that never finishes cannot be force-killed by the timeout; the call will not return until the command completes on its own.</p>
+						</li>
+						<li class="method-item"><code>CommandResult runShellAdbWifi(String command, ...)</code>
+							<br>Runs a shell command via ADB over WiFi and returns a <code>CommandResult</code> (see <code>runShell</code>). It does <b>not</b> check whether ADB WiFi is available first; call <code>isAdbWifiAvailable()</code> to verify. This backend reports <code>getExitCode()</code> as 0 and puts all output (including errors) in <code>getOutput()</code>. A two-argument override <code>runShellAdbWifi(String command, int timeoutSeconds)</code> sets a custom timeout (default 30 seconds).
+						</li>
+						<li class="method-item"><code>boolean isRootAvailable()</code>
+							<br>Returns <code>true</code> if root is available. May trigger the device's root permission prompt the first time, like other root checks in Tasker. This check is optional; the <code>runShell...</code> methods do not call it automatically.
+						</li>
+						<li class="method-item"><code>boolean isShizukuAvailable()</code>
+							<br>Returns <code>true</code> if Shizuku is running and authorized. This check is optional; the <code>runShell...</code> methods do not call it automatically.
+						</li>
+						<li class="method-item"><code>boolean isAdbWifiAvailable()</code>
+							<br>Returns <code>true</code> if ADB over WiFi is set up and reachable. This check is optional; the <code>runShell...</code> methods do not call it automatically.
+						</li>
+					</ul>
+					<p>
+						You can also access Java objects that were created and returned by other Tasker Java actions (like <b>Java Function</b>) within your code.
+					</p>
+				</div>
+				<div class="section" id="third-party-libraries">
+					<div class="section-title">Third-Party Libraries</div>
+					<p>
+						You have access to specific third-party libraries to simplify common tasks without needing manual imports or complex setups.
+					</p>
+
+					<h5 style="margin-top:20px; font-weight:bold;">OkHttp3 (Web Requests)</h5>
+					<p>
+						Use this for all HTTP requests. Since your script runs on a background thread, you should prefer <b>synchronous</b> calls (<code>execute()</code>) over asynchronous callbacks to keep the code linear and readable.
+					</p>
+					<pre>
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+client = new OkHttpClient();
+request = new Request.Builder()
+    .url("https://www.example.com")
+    .build();
+
+/* Execute synchronously. */
+response = client.newCall(request).execute();
+body = response.body().string();
+return body;</pre>
+
+					<h5 style="margin-top:20px; font-weight:bold;">Coil (Image Loading)</h5>
+					<p>
+						Use Coil to load images from URLs.
+					</p>
+					<ul>
+						<li><b>Loading into an ImageView (Preferred):</b> Use the asynchronous <code>enqueue()</code> method with <code>.target(imageView)</code>. This prevents UI freezes (e.g., in custom Dialogs) by loading images in the background while keeping the UI responsive.</li>
+						<li><b>Loading Raw Data:</b> Use the synchronous <code>execute()</code> method only if you need the actual <code>Bitmap</code> or <code>Drawable</code> object for processing within the script.</li>
+					</ul>
+					<p><b>Example: Async loading into an ImageView</b></p>
+					<pre>
+import coil.Coil;
+import coil.request.ImageRequest;
+
+/* Assume 'myImageView' is an existing view in your layout/dialog. */
+request = new ImageRequest.Builder(context)
+    .data("https://www.example.com/image.png")
+    .target(myImageView)
+    .build();
+
+/* Load in background without blocking the script or UI. */
+Coil.imageLoader(context).enqueue(request);</pre>
+				</div>
+				<div class="section" id="async-rxjava">
+					<div class="section-title">Asynchronous Operations with RxJava</div>
+					<p>
+						The <b>RxJava2</b> library is available for handling asynchronous operations like waiting for events, performing background work, or running code after a delay. The action will automatically wait for your reactive stream to complete before proceeding.
+					</p>
+					<p>
+						To monitor something in the background, such as a stream of events that should start tasks or keep a condition up to date, prefer the <a href="eh_java_code.html">Java Code event</a> or the <a href="sh_java_code.html">Java Code state</a>. They run your Observable script for you and manage the subscription, so you do not need a kill switch or stored <code>Disposable</code>.
+					</p>
+					<p class="grave-danger">
+						You <b>must</b> end your RxJava chain with a blocking operator (like <code>blockingAwait()</code>, <code>blockingGet()</code>, or <code>blockingFirst()</code>). This is what tells the action to wait for your asynchronous operation to finish.
+					</p>
+
+					<p style="margin-top: 24px;">
+						<b>Waiting for Events with Subjects (Recommended)</b>
+					</p>
+					<p>
+						To wait for an event from a callback (like in a `BroadcastReceiver` or another listener), the cleanest approach is to use a <b>Subject</b>. You create a subject, use it within your callback implementation to signal that an event has occurred, and then block the script until that signal is received. This is much simpler than using complex operators like <code>Completable.create()</code>.
+					</p>
+					<p>
+						<b>Example: Using a Subject to wait for a signal</b>
+					</p>
+					<pre>
+import io.reactivex.subjects.CompletableSubject;
+
+/* Create a subject that will act as our signal. */
+mySignal = CompletableSubject.create();
+
+/*
+ * In another part of your code (e.g., inside the 'run' method of an
+ * implemented BroadcastReceiver), you would signal completion like this:
+ *
+ * mySignal.onComplete();
+ *
+ * See the `implementClass` BroadcastReceiver example for a practical use case.
+*/
+
+/* This line will block and wait until onComplete() is called. */
+mySignal.blockingAwait();
+
+tasker.log("Signal received, script can now continue.");</pre>
+
+					<p style="margin-top: 24px;">
+						<b>Simple Delays and Timers</b>
+					</p>
+					<p>For basic delays, using a simple timer is still appropriate.</p>
+					<p>
+						<b>Example: Wait for 3 seconds</b>
+					</p>
+					<pre>
+import java.util.concurrent.TimeUnit;
+import io.reactivex.Completable;
+
+/* Wait for 3 seconds on a background thread. */
+Completable.timer(3, TimeUnit.SECONDS).blockingAwait();
+
+/* This code will run after the 3-second delay. */
+tasker.log("3 seconds have passed.");</pre>
+					<p>
+						<b>Example: Get a value after a delay</b>
+					</p>
+					<pre>
+import java.util.concurrent.TimeUnit;
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
+
+/* Get the string "Hello" after a 1 second delay. */
+result = Single.timer(1, TimeUnit.SECONDS)
+               .map(new Function() {
+                   apply(Object aLong) {
+                       return "Hello";
+                   }
+               })
+               .blockingGet();
+
+return result; /* Returns "Hello" */</pre>
+				</div>
+
+				<div class="section" id="return-value">
+					<div class="section-title">Return Value</div>
+					<p>
+						The value from your code's <b>return</b> statement will be stored in the output variable specified in the "Return" field. Any variables you declare inside your code are temporary and will be discarded when the action finishes.
+					</p>
+					<p>
+						The scope (local or global) of the returned value is determined by the capitalization of the variable name you choose:
+					</p>
+					<ul>
+						<li><b>Without a % prefix (stores as a Java Object)</b>
+							<p>This is ideal for passing complex data, like a <code>List</code> or custom object, to another Java-based action. The actual Java object is stored in memory.</p>
+							<ul>
+								<li><b>All lowercase name</b> (e.g. <code>my_object</code>, <code>resultslist</code>): The object is stored <b>locally</b> and is only available within the current task.</li>
+								<li><b>Name contains at least one uppercase letter</b> (e.g. <code>myGlobalObject</code>, <code>persistentList</code>): The object is stored <b>globally</b> and persists across different tasks.
+									<ul>
+										<li><b>CRITICAL:</b> The first letter of a global Java object name <b>must</b> be lowercase (e.g., <code>myGlobalObject</code> is valid, but <code>MyGlobalObject</code> is not).</li>
+									</ul>
+									<p class="grave-danger" style="margin-top: 8px; padding: 12px 16px; border-width: 1px 1px 1px 5px;">Important: Global Java objects persist in memory. If you no longer need one, you should manually clear it using the <code>tasker.clearGlobalJavaVariables()</code> method or the <b>Java Function</b> action to prevent memory leaks.</p>
+								</li>
+							</ul>
+						</li>
+						<li><b>With a % prefix (stores as a standard Tasker Variable)</b>
+							<p>The object's <code>.toString()</code> method is called, and the resulting text is stored in a Tasker variable. A <code>List</code> (or any other <code>Collection</code>) or a Java array is stored as a Tasker array instead: returning a 3-item list to <code>%items</code> sets <code>%items1</code>, <code>%items2</code> and <code>%items3</code> and clears any elements left over from before.</p>
+							<ul>
+								<li><b>All lowercase name</b> (e.g. <code>%result</code>, <code>%http_data</code>): The variable is <b>local</b> to the current task.</li>
+								<li><b>Name contains at least one uppercase letter</b> (e.g. <b>%Result</b>, <b>%LastLocation</b>): The variable is <b>global</b> and accessible from any task.
+									<ul>
+										<li><b>Convention:</b> Avoid using all-uppercase names (e.g., <code>%WIFI</code>). These are typically reserved for Tasker's built-in read-only variables.</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+				<div class="section" id="variable-typing">
+					<div class="section-title">Variable Typing and Scope</div>
+					<p>
+						BeanShell supports both strong and dynamic typing. You do not need to declare a specific type when creating a variable, and you can reassign values of different types to the same variable without errors—similar to how Tasker handles variables.
+					</p>
+
+					<p><b>Scope inside Functions:</b> The behavior of a variable inside a function depends on how it is initialized:</p>
+					<ul>
+						<li><b>With a type declaration:</b> If you specify a type (e.g., <code>String i = ...</code>), the variable is <b>local</b> to that function and will not affect variables with the same name outside of it.</li>
+						<li><b>Without a type declaration:</b> If you simply assign a value (e.g., <code>i = ...</code>), BeanShell will look for that variable in the <b>outer scope</b> and modify it directly.</li>
+					</ul>
+
+					<p><b>Example: Local Scope</b> (Returns "1")</p>
+					<pre>
+i = "1";
+test() {
+    String i = "12"; /* Declared with a type: it's a new local variable. */
+}
+test();
+return i;</pre>
+
+					<p><b>Example: Outer Scope</b> (Returns "12")</p>
+					<pre>
+i = "1";
+test() {
+    i = "12"; /* Assigned without a type: modifies the existing 'i' variable. */
+}
+test();
+return i;</pre>
+				</div>
+
+				<div class="grave-danger">
+					<b>Warning:</b> This is a very powerful action for advanced users. The code you write is not sandboxed and can modify your device's settings or data. The BeanShell interpreter does not support modern Java features like Generics (&lt;...&gt;), Lambdas, or Streams.
+				</div>
+
+				<div class="example-section" id="example">
+					<h5 style="margin-top:0; font-size: 1.4em; font-weight: 600;">Example</h5>
+					<p>You can use the following code to set the <b>%wifi</b> variable to the name of currently connected Wifi Network.</p>
+					<div class="section-title">Java Code:</div>
+					<pre>
+import android.content.Context;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiInfo;
+
+/* Get the WifiManager service. */
+WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+/* If WiFi manager is unavailable or WiFi is disabled, exit. */
+if (wifiManager == null || !wifiManager.isWifiEnabled()) return null;
+
+/* Get information about the currently connected WiFi network. */
+WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+if (wifiInfo == null) return null;
+
+/* Get the raw SSID string. */
+String ssid = wifiInfo.getSSID();
+if (ssid == null) return null;
+
+/* Remove surrounding quotes from the SSID if they exist. */
+if (ssid.startsWith("\"") && ssid.endsWith("\"")) ssid = ssid.substring(1, ssid.length() - 1);
+
+/* Return the cleaned SSID. */
+return ssid;
+</pre>
+					<div class="section-title">Return Field:</div>
+					<pre>%wifi</pre>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			// Find the list that contains all the method definitions.
+			const methodList = document.querySelector('.method-list');
+			if (!methodList) {
+				console.error('Could not find the method list container.');
+				return;
+			}
+
+			// Find the paragraph that introduces the 'tasker' object. We'll insert the index after this.
+			const introParagraph = Array.from(document.querySelectorAll('p')).find(p => p.textContent.includes(
+				'The available methods are:'));
+			if (!introParagraph) {
+				console.error('Could not find the introductory paragraph for insertion.');
+				return;
+			}
+
+			// Create a container for our new index.
+			const indexContainer = document.createElement('div');
+			indexContainer.className = 'section';
+			indexContainer.id = 'function-index'; // Added ID for TOC targeting
+
+			// Create a title for the index.
+			const indexTitle = document.createElement('div');
+			indexTitle.className = 'section-title';
+			indexTitle.textContent = 'Function Index';
+			indexContainer.appendChild(indexTitle);
+
+			// Create the 'ul' element that will hold the list of links.
+			const indexList = document.createElement('ul');
+
+			// Setup container for sidebar sub-items
+			const tocFunctionIndex = document.querySelector('a[data-section="function-index"]');
+			const tocSubNav = document.createElement('div');
+
+			// Find all individual method items within the main list.
+			const methods = methodList.querySelectorAll('.method-item');
+
+			// Loop through each method item to create an anchor and a corresponding index link.
+			methods.forEach((methodItem) => {
+				// The function signature is in the first 'code' tag.
+				const signatureCode = methodItem.querySelector('code');
+				if (!signatureCode) return; // Skip if no code tag is found
+
+				const signatureText = signatureCode.textContent.trim();
+				
+				// Extract just the function name (ignoring return types and modifiers)
+				const preParen = signatureText.split('(')[0].trim();
+				const nameWords = preParen.split(' ');
+				const functionName = nameWords[nameWords.length - 1];
+				
+				const anchorId = `func-${functionName}`;
+
+				// Set the ID on the method's list item so the link can target it.
+				methodItem.id = anchorId;
+
+				// Create the list item for the index.
+				const indexListItem = document.createElement('li');
+				// Remove the default bottom margin for a tighter index list
+				indexListItem.style.marginBottom = "8px";
+
+				// Create the anchor link.
+				const anchorLink = document.createElement('a');
+				anchorLink.href = `#${anchorId}`; // Link to the ID we just set.
+
+				// Use the full function signature as the link text.
+				anchorLink.textContent = signatureText;
+
+				// Append the link to the list item, and the list item to our index list.
+				indexListItem.appendChild(anchorLink);
+				indexList.appendChild(indexListItem);
+
+				// Add the sub-item to the sidebar TOC
+				if (tocFunctionIndex) {
+					const tocLink = document.createElement('a');
+					tocLink.href = `#${anchorId}`;
+					tocLink.className = 'nav-link sub-nav-link';
+					tocLink.textContent = functionName;
+					tocLink.style.paddingLeft = '40px'; // Indent to indicate sub-hierarchy
+					tocLink.style.fontSize = '0.85em';
+					tocSubNav.appendChild(tocLink);
+				}
+			});
+
+			// Add the completed list of links to our container.
+			indexContainer.appendChild(indexList);
+
+			// Insert the entire index container into the page, right after the introductory paragraph.
+			introParagraph.parentNode.insertBefore(indexContainer, introParagraph.nextSibling);
+
+			// Insert the sub-nav into the sidebar right after the Function Index link.
+			if (tocFunctionIndex) {
+				tocFunctionIndex.parentNode.insertBefore(tocSubNav, tocFunctionIndex.nextSibling);
+			}
+
+			// ===== Sidebar / Mobile Menu Script =====
+			const sidebar = document.getElementById('sidebar');
+			const hamburger = document.getElementById('hamburger');
+			const overlay = document.getElementById('sidebar-overlay');
+
+			function toggleSidebar() {
+				sidebar.classList.toggle('open');
+				overlay.classList.toggle('visible');
+			}
+
+			if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+			if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+			// Close sidebar on link click (mobile)
+			document.querySelectorAll('.sidebar .nav-link').forEach(function (link) {
+				link.addEventListener('click', function () {
+					if (window.innerWidth <= 768) {
+						sidebar.classList.remove('open');
+						overlay.classList.remove('visible');
+					}
+				});
+			});
+			// ===== Search Filter Script =====
+			const searchInput = document.getElementById('search');
+			let searchTimeout;
+
+			if (searchInput) {
+				searchInput.addEventListener('input', function () {
+					const query = this.value.trim().toLowerCase();
+
+					clearTimeout(searchTimeout);
+					searchTimeout = setTimeout(function () {
+						const filterableSections = document.querySelectorAll('.section, .example-section');
+
+						filterableSections.forEach(function (section) {
+							if (!query) {
+								section.classList.remove('hidden');
+								return;
+							}
+
+							const text = section.textContent.toLowerCase();
+							if (text.indexOf(query) !== -1) {
+								section.classList.remove('hidden');
+							} else {
+								section.classList.add('hidden');
+							}
+						});
+
+						document.querySelectorAll('.sidebar .nav-link').forEach(function (link) {
+							if (!query) {
+								link.classList.remove('hidden');
+								return;
+							}
+
+							if (link.classList.contains('sub-nav-link')) {
+								if (link.textContent.toLowerCase().indexOf(query) === -1) {
+									link.classList.add('hidden');
+								} else {
+									link.classList.remove('hidden');
+								}
+								return;
+							}
+
+							const sectionId = link.getAttribute('data-section');
+							const section = document.getElementById(sectionId);
+
+							if (section && section.classList.contains('hidden')) {
+								link.classList.add('hidden');
+							} else {
+								link.classList.remove('hidden');
+							}
+						});
+					}, 150);
+				});
+			}
+			// ===== Scroll Spy Script =====
+			const contentWrapper = document.getElementById('content');
+			const sections = contentWrapper.querySelectorAll('.section, .example-section');
+			const navLinks = document.querySelectorAll('.nav-link');
+
+			function updateScrollSpy() {
+				let currentId = '';
+				sections.forEach(function (section) {
+					const rect = section.getBoundingClientRect();
+					// Highlight the section if it is reasonably near the top
+					if (rect.top <= window.innerHeight / 3) {
+						currentId = section.getAttribute('id');
+					}
+				});
+
+				navLinks.forEach(function (link) {
+					if (link.getAttribute('data-section') === currentId) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+			}
+
+			// Debounced scroll listener for performance
+			let scrollTicking = false;
+			window.addEventListener('scroll', function () {
+				if (!scrollTicking) {
+					window.requestAnimationFrame(function () {
+						updateScrollSpy();
+						scrollTicking = false;
+					});
+					scrollTicking = true;
+				}
+			}, { passive: true });
+
+			// Initial trigger
+			updateScrollSpy();
+		});
+	</script>
+</body>
+
+</html>

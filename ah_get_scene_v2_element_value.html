@@ -1,47 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Get Scene V2 Element Value</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <!--<nav aria-label="Breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a href="/">Main</a></li>
+                        <li><a href="/actions">Actions</a></li>
+                    </ol>
+                </nav>-->
+                <h1>Get Scene V2 Element Value</h1>
+                <p class="description">Get the current value of an element in a currently visible Scene V2.</p>
+            </header>
 
-<html>
+            <p>This is useful for reading user input from elements like <i>TextInput</i>, <i>Switch</i>, or any other interactive component.</p>
+            <p><span class="param icon icon-text">Screen ID</span> is required and must match the ID of the scene containing the element.</p>
+            <p><span class="param icon icon-text">Element ID</span> is required and must match the ID of the element whose value you want to read.</p>
+            <p>The result will be returned in the output variables shown in the action's configuration.</p>
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<style type="text/css">
-		.input {}
-
-		.input .title {
-			font-size: 110%;
-			font-weight: bold;
-			margin-top: 24px;
-		}
-
-		.input .text {
-			margin-top: 8px;
-		}
-
-		.grave_danger {
-			color: red;
-			font-weight: bold;
-		}
-	</style>
-</head>
-
-<body><h4><span class="name">Get Scene v2 Values</span></h4>
-	<p>
-		Reads the values that a currently visible Scene V2 is outputting and stores them in local variables.
-	</p>
-	<p>
-		Every output variable that the scene's elements are configured to produce is returned, using the variable names you set up in the scene.
-	</p>
-	<p>
-		<b>Screen ID</b> is required and must match the Screen ID used when the scene was shown.
-	</p>
-	<p>
-		For example, a <b>TextInput</b> returns the text the user entered and a <b>Switch</b> returns its checked state. Elements with no output variable configured, such as a plain <b>Text</b> element, produce nothing.
-	</p>
-	<p>
-		If more than one element writes to the same variable name, that variable is returned as an array.
-	</p>
-	<p>
-		Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.
-	</p>
-</body>
-
+            <footer>
+                <h2>See also</h2>
+                <p>Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.</p>
+            </footer>
+        </main>
+    </body>
 </html>

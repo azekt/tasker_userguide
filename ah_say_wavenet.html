@@ -1,71 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Say WaveNet</title> <!-- Default title -->
-    <style type="text/css">
-      	.input{
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Say WaveNet</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <!--<nav aria-label="Breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="/">Main</a></li>
+                    <li><a href="/actions">Actions</a></li>
+                    <li aria-current="page">Say WaveNet</li>
+                </ol>
+            </nav>-->
+                <h1 id="page-title">Say WaveNet</h1>
+                <p class="description" id="feature-description">Allows you to make Tasker say something out loud using advanced <a href="https://cloud.google.com/text-to-speech/" target="_blank">WaveNet Voices</a>.</p>
+            </header>
 
-}
-.input .title{
-    font-size: 110%;
-    font-weight: bold;
-    margin-top: 24px;
-}
-.input .text{
+            <p id="ssml-info">You can use <a href="https://cloud.google.com/text-to-speech/docs/ssml" target="_blank">SSML</a> to more accurately structure your speech.</p>
+            <p>To use this action, you'll have to have a Google Cloud project on your Google account and use an API Key from that project.</p>
+            <p>To do that:</p>
+            <ul>
+                <li>Select or create a <a href="https://console.cloud.google.com/cloud-resource-manager" target="_blank">Google Cloud project</a>.</li>
+                <li><a href="https://console.cloud.google.com/billing/linkedaccount" target="_blank">Enable billing</a> for your project. <span class="note">(Note: even though billing is enabled, you'll only be charged if you go over the <a href="https://cloud.google.com/text-to-speech/pricing" id="pricing-link" target="_blank">free quota</a>.)</span></li>
+                <li>Enable the <a href="https://console.cloud.google.com/flows/enableapi?apiid=texttospeech.googleapis.com" id="enable-api-link" target="_blank"><strong id="api-name-text">Text-to-Speech</strong> API</a>.</li>
+                <li>Go to the <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Credentials</a> page.</li>
+                <li>Click on <b>Create credentials</b> &gt; <b>API key</b>. A new key will be generated.</li>
+                <li>Copy and paste the API Key into <strong id="api-key-location-text">Tasker &gt; Preferences &gt; Misc &gt; Google API Key</strong>.</li>
+                <li><strong>Important Security Note:</strong> It's highly recommended to restrict your API key. Choose only the specific API you enabled (e.g., "<span id="api-name-restrict-text">Text-to-Speech</span>").</li>
+            </ul>
 
-}
-    </style>
-</head>
-<body>
-    <!-- Default "Say WaveNet" Content -->
-    <h4 id="page-title">Say WaveNet</h4> <!-- ID added -->
-    <p id="feature-description"> <!-- ID added -->
-        Allows you to make Tasker say something out loud using advanced <a href="https://cloud.google.com/text-to-speech/" target="_blank">WaveNet Voices</a>.
-    </p>
-    <p id="ssml-info">You can use <a href="https://cloud.google.com/text-to-speech/docs/ssml" target="_blank">SSML</a> to more accurately structure your speech.</p> <!-- ID added -->
-    <p>To use this action, you'll have to have a Google Cloud project on your Google account and use an API Key from that project.</p>
-    <p>
-        <div>To do that:</div>
-        <ul>
-            <li>Select or create a Google Cloud project <a href="https://console.cloud.google.com/cloud-resource-manager" target="_blank">here</a>.</li>
-            <li>Enable billing for your project <a href="https://console.cloud.google.com/billing/linkedaccount" target="_blank">here</a>.
-                 <span class="note">(Note: even though billing is enabled, you'll only be charged if you go over the <a id="pricing-link" href="https://cloud.google.com/text-to-speech/pricing" target="_blank">free quota</a>.)</span> <!-- ID Added to pricing link -->
-            </li>
-            <li>
-                Enable the <strong id="api-name-text">Text-to-Speech</strong> API <!-- ID Added -->
-                <a id="enable-api-link" href="https://console.cloud.google.com/flows/enableapi?apiid=texttospeech.googleapis.com" target="_blank">here</a>. <!-- ID Added -->
-            </li>
-            <li>Go to the <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Credentials</a> page.</li>
-            <li>Click on <b>Create credentials</b> > <b>API key</b>. A new key will be generated.</li>
-            <li>
-                Copy and paste the API Key into <strong id="api-key-location-text">Tasker > Preferences > Misc > Google API Key</strong>. <!-- ID Added -->
-            </li>
-             <li>
-                <strong>Important Security Note:</strong> It's highly recommended to restrict your API key... choose only the specific API you enabled (e.g., "<span id="api-name-restrict-text">Text-to-Speech</span>")... <!-- ID Added -->
-            </li>
-        </ul>
-    </p>
+            <section id="default-inputs">
+                <h2>Action Inputs</h2>
+                <h3 class="param icon icon-boolean">Continue Task Immediately</h3>
+                <p>Enable if you don't want the task to wait for it to finish speaking. You must select this in order to do a Shut Up action later.</p>
+                <hr />
+                <h3 class="param icon icon-text">File</h3>
+                <p>If set, will write the speech to a file with the mp3 format</p>
+                <hr />
+                <h3 class="param icon icon-text">Override API Key</h3>
+                <p>If set will override the key entered in the main Tasker Preferences.</p>
+            </section>
+        </main>
 
-    <!-- RESTORED Default Inputs Section (for Say WaveNet) -->
-    <div id="default-inputs" class="inputs"> <!-- Added ID -->
-        <div class="input">
-            <div class="title">Continue Task Immediately</div>
-            <div class="text">Enable if you don't want the task to wait for it to finish speaking. You must select this in order to do a Shut Up action later.</div>
-        </div>
-        <div class="input">
-            <div class="title">File</div>
-            <div class="text">If set, will write the speech to a file with the mp3 format</div>
-        </div>
-        <div class="input">
-            <div class="title">Override API Key</div>
-            <div class="text">If set will override the key entered in the main Tasker Preferences.</div>
-        </div>
-    </div>
-
-
-    <script>
+<script>
         document.addEventListener("DOMContentLoaded", function() {
             const urlParams = new URLSearchParams(window.location.search);
             let isCustomized = false; // Flag to track if any overrides are applied
@@ -132,5 +113,5 @@
             }
         });
     </script>
-</body>
+    </body>
 </html>

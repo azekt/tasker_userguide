@@ -1,59 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Trigger Scene v2 Event</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <!--<nav aria-label="Breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="/">Main</a></li>
+                    <li><a href="/actions">Actions</a></li>
+                    <li aria-current="page">Trigger Scene v2 Event</li>
+                </ol>
+            </nav>-->
+                <h1>Trigger Scene v2 Event</h1>
+                <p class="description">Fires the event handlers configured on an element of a currently visible Scene V2, exactly as the in-scene Trigger Event action does. Use it to drive a scene from a task, for example to "click" a button or mark an input as changed.</p>
+            </header>
 
-<html>
+            <p>Only the configured handlers run. No visual feedback is produced on the element itself.</p>
+            <p><span class="param icon icon-text">Screen ID</span> is required and must match the Screen ID used when the scene was shown.</p>
+            <p><span class="param icon icon-text">Element ID</span> is required and must refer to an element that is currently visible in that scene. Use the magnifying glass to pick from the elements in one of your scenes.</p>
+            <p><span class="param icon icon-text">Event ID</span> is the event to fire, such as <code>click</code>, <code>hold</code>, <code>multi_click</code> or <code>text_changed</code>. Every handler on the element that listens for this event runs. Use the magnifying glass to pick from the events configured on the chosen element.</p>
+            <p><span class="param icon icon-text">Event Param Names</span> and <span class="param icon icon-text">Event Param Values</span> are optional comma-separated lists that pick a specific handler when several listen for the same event. For example, <span class="param icon icon-text">Event Param Names</span>=<code>count</code> and <span class="param icon icon-text">Event Param Values</span>=<code>2</code> only fires the handler set up for a double <code>multi_click</code>.</p>
+            <p><span class="param icon icon-text">Event Output Names</span> and <span class="param icon icon-text">Event Output Values</span> are optional comma-separated lists that supply values to the fired handlers as though the event had produced them. For example, <span class="param icon icon-text">Event Output Names</span>=<code>text</code> and <span class="param icon icon-text">Event Output Values</span>=<code>hello</code>. You can use Tasker arrays directly in <span class="param icon icon-text">Event Output Values</span>.</p>
+            <p>Each <i>Names</i> field must have the same number of items as its matching Values field.</p>
+            <p>The action fails if no scene with the given <span class="param icon icon-text">Screen ID</span> is currently showing, the element is not found, the element has no handler for the chosen event (or none matching the given event params), or a <i>Names</i> / <i>Values</i> pair has a different number of items.</p>
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<style type="text/css">
-		.input {}
-
-		.input .title {
-			font-size: 110%;
-			font-weight: bold;
-			margin-top: 24px;
-		}
-
-		.input .text {
-			margin-top: 8px;
-		}
-
-		.grave_danger {
-			color: red;
-			font-weight: bold;
-		}
-	</style>
-</head>
-
-<body><h4><span class="name">Trigger Scene v2 Event</span></h4>
-	<p>
-		Fires the event handlers configured on an element of a currently visible Scene V2, exactly as the in-scene <b>Trigger Event</b> action does. Use it to drive a scene from a task, for example to "click" a button or mark an input as changed.
-	</p>
-	<p>
-		Only the configured handlers run. No visual feedback is produced on the element itself.
-	</p>
-	<p>
-		<b>Screen ID</b> is required and must match the Screen ID used when the scene was shown.
-	</p>
-	<p>
-		<b>Element ID</b> is required and must refer to an element that is currently visible in that scene. Use the magnifying glass to pick from the elements in one of your scenes.
-	</p>
-	<p>
-		<b>Event ID</b> is the event to fire, such as <b>click</b>, <b>hold</b>, <b>multi_click</b> or <b>text_changed</b>. Every handler on the element that listens for this event runs. Use the magnifying glass to pick from the events configured on the chosen element.
-	</p>
-	<p>
-		<b>Event Param Names</b> and <b>Event Param Values</b> are optional comma-separated lists that pick a specific handler when several listen for the same event. For example, <b>Event Param Names</b>=<b>count</b> and <b>Event Param Values</b>=<b>2</b> only fires the handler set up for a double <b>multi_click</b>.
-	</p>
-	<p>
-		<b>Event Output Names</b> and <b>Event Output Values</b> are optional comma-separated lists that supply values to the fired handlers as though the event had produced them. For example, <b>Event Output Names</b>=<b>text</b> and <b>Event Output Values</b>=<b>hello</b>. You can use Tasker arrays directly in <b>Event Output Values</b>.
-	</p>
-	<p>
-		Each Names field must have the same number of items as its matching Values field.
-	</p>
-	<p>
-		The action fails if no scene with the given Screen ID is currently showing, the element is not found, the element has no handler for the chosen event (or none matching the given event params), or a Names/Values pair has a different number of items.
-	</p>
-	<p>
-		Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.
-	</p>
-</body>
-
+            <footer>
+                <h2>See also</h2>
+                <p>Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.</p>
+            </footer>
+        </main>
+    </body>
 </html>
