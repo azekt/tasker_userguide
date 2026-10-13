@@ -10,11 +10,11 @@
         <main>
             <header>
                 <!--<nav aria-label="Breadcrumb">
-                <ol class="breadcrumb">
-                    <li><a href="/">Main</a></li>
-                    <li><a href="/actions">Actions</a></li>
-                    <li aria-current="page">Clear Quick Setting Tile</li>
-                </ol>
+                    <ol class="breadcrumb">
+                        <li><a href="/">Main</a></li>
+                        <li><a href="/actions">Actions</a></li>
+                        <li aria-current="page">Clear Quick Setting Tile</li>
+                    </ol>
                 </nav>-->
                 <h1>Clear Quick Setting Tile</h1>
                 <p class="description">Reset one of Tasker's Quick Settings tiles back to its empty, unconfigured state.</p>
@@ -22,7 +22,6 @@
 
             <p>Every value previously set with the Set up Quick Setting Tile action is removed: the short, long and double click Tasks and Commands, the Command Prefix, Label, Subtitle, Icon, Status and the Can Use On Locked Device and Hide Notification Shade options.</p>
 
-            
             <p>Tiles 4 to 50 are hidden from Android's own Quick Settings editor until they are configured, so clearing one of them also removes it from your active tiles in the panel. Android remembers the tile's place, though: if you later set the same tile up again with Set up Quick Setting Tile, it comes back in the same position it had before.</p>
             <p>You can use this quirk to build dynamic tile layouts whose length changes on demand. Clearing tiles shrinks the visible set and setting them up again grows it, and because each tile always returns to its original slot the layout keeps its order no matter how many elements you currently show.</p>
             <p>Tiles 1 to 3 are always available and are simply returned to their default appearance.</p>
