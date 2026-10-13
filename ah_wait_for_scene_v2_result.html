@@ -1,0 +1,46 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		.input {}
+
+		.input .title {
+			font-size: 110%;
+			font-weight: bold;
+			margin-top: 24px;
+		}
+
+		.input .text {
+			margin-top: 8px;
+		}
+
+		.grave_danger {
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body><h4><span class="name">Wait For Scene V2 Result</span></h4>
+	<p>
+		Wait for a currently visible Scene V2 to be dismissed and return its result.
+	</p>
+	<p>
+		This action is useful when a scene was shown with <b>Continue Task Immediately</b> enabled in the <b>Show Scene V2</b> action, and you want to wait for a response at a later point in your task.
+	</p>
+	<p>
+		<b>Screen ID</b> is required and must match the ID of the scene you want to wait for. The scene must already be visible.
+	</p>
+	<p>
+		Set <b>Timeout (ms)</b> to specify a maximum wait time in milliseconds. If the scene is not dismissed within this time, the action will fail. Leave empty to wait indefinitely.
+	</p>
+	<p>
+		When the scene is dismissed, the result will be returned in the output variables shown in the action's configuration.
+	</p>
+	<p>
+		Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.
+	</p>
+</body>
+
+</html>

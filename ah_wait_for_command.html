@@ -1,0 +1,41 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		.input {}
+
+		.input .title {
+			font-size: 110%;
+			font-weight: bold;
+			margin-top: 24px;
+		}
+
+		.input .text {
+			margin-top: 8px;
+		}
+	</style>
+</head>
+
+<body><h4><span class="name">Wait For Command</span></h4>
+	<p>
+		Pauses the current task until a command is received via the <a href="https://tasker.joaoapps.com/commandsystem.html">Tasker Command System</a> or times out.
+	</p>
+	<p>
+		Use <b>Command Pattern</b> to filter which commands should unblock this action. The pattern supports Tasker's standard match syntax (wildcards like <code>*</code> and multi-pattern separators like <code>/</code>). Leave it empty to accept any incoming command.
+	</p>
+	<p>
+		<b>Timeout (Seconds)</b> sets the maximum wait time. If no matching command arrives within this period, the action fails and you can handle it with the usual action error-handling options (e.g. <i>Continue Task After Error</i>, or an <i>If</i>/<i>Stop</i> check on <code>%err</code>).
+	</p>
+	<p>
+		Only commands triggered <i>after</i> this action starts running are considered; commands emitted earlier will not unblock it.
+	</p>
+	<p>
+		When a matching command is received, the full command string is stored in the output variable <code>%wfc_command</code> so the rest of the task can react to its contents.
+	</p>
+	<p>
+		Commands can be sent from the <b>Command</b> action, AutoApps, or any other source that uses the Tasker Command System, and can be received by the <b>Command</b> event as well.
+	</p>
+</body>
+
+</html>

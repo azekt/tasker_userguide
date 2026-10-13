@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Actions | Variable Set</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Variable Set</h1>
+        <p class="description">Set the variable <span class="param icon_dynamic icon_text">Name</span> to the value <span class="param icon_boolean">To</span>.</p>
+        <p>Name can be any desired string, however it's advisable to make it a sequence that does not commonly occur in text otherwise it will match at unexpected times.</p>
+        <p>Names all in lower-case are <i>local</i> variables which are only visible in the current task.</p>
+        <p>If <span class="param icon_boolean">Recurse&nbsp;Variables</span> is checked, all variables mentioned in the <span class="param icon_text">To</span> parameter will be repeatedly replaced until there are no variable names left, otherwise only one round of variable replacement will take place.</p>
+        <p>If <span class="param icon_boolean">Append</span> is checked, <span class="param icon_text">To</span> is added to the existing value of the variable.</p>
+        <p>If <span class="param icon_boolean">Do&nbsp;Maths</span> is checked then at the time of assignment the value of <span class="param icon_text">To</span> will be evaluated as a mathematical expression.</p>
+        <p>Example:</p>
+        <p class="code">
+            Name: %FROG<br>
+            To: %VOLC + 1
+        </p>
+        <p>Assuming <span class="var">%VOLC</span> is 8, if <span class="param icon_boolean">Do Maths</span> is checked, <span class="var">%FROG</span> will get the value <span class="code">'9'</span>, otherwise it will get the value <span class="code">'8&nbsp;+&nbsp;1'</span>.</p>
+        <p>If <span class="param icon_text">To</span> cannot be numerically evaluated (e.g. it is <span class="code">'cat&nbsp;+&nbsp;3'</span>) then the current task will terminate. </p>
+        <hr>
+        <h2>See also</h2>
+        <p><a href="../variables.html">Variables</a> section in the Userguide.</p>
+    </div>
+</body>
+</html>

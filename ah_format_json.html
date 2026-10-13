@@ -1,0 +1,10 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><H3>Format JSON</H3>
+	<P>Takes JSON text and outputs a reformatted version: either minified (compact, all on one line) or pretty-printed with the indentation you choose.</P>
+	<ul>
+		<li>Put the JSON you want to reformat in the <b>JSON</b> field. It can be a literal value or a variable like %myjson.</li>
+		<li>Set <b>Format</b> to <b>Minify</b> to strip all spacing and line breaks, or to <b>Pretty</b> to lay the JSON out over multiple indented lines. Tap the magnifying glass to pick.</li>
+		<li>When <b>Format</b> is <b>Pretty</b>, an <b>Indent</b> field appears. Enter the number of spaces to indent with (for example 2 or 4), or write <b>Tab</b> to indent with tabs. The magnifying glass offers the common choices.</li>
+		<li>The result is placed in <b>%fj_formatted</b>.</li>
+		<li>Key order and value types from the input are preserved. The action fails if the input is not a valid JSON object or array.</li>
+	</ul>
+</body></html>

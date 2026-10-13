@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+    <H3>Set up Quick Setting Tile</H3>
+    <P>Dynamically configure one of Tasker's Quick Settings tiles: the tiles in the panel you pull down from the top of the screen.
+        <br /><br />
+        Tasker provides up to 50 tiles. The first 3 are always available to add from Android's own Quick Settings editor. The other 47 stay hidden from that editor until you configure them here: as soon as you give a tile a Task or a Command for any click type, it becomes available to add. Setting up a tile with no Task and no Command, or using the Clear Quick Setting Tile action, hides it from the editor again.
+        <br /><br />
+        When you clear a dynamic tile (4 to 50) it also disappears from your active tiles in the panel, and setting the same tile up again brings it back in the same position as before. This lets you build dynamic tile layouts that grow and shrink on demand while keeping their order. See Clear Quick Setting Tile.
+        <br /><br />
+        <b>Number</b>: which tile to configure, from 1 to 50.
+        <br /><br />
+        <b>Task</b> / <b>Long Click Task</b> / <b>Double Click Task</b>: the tasks to run on a short click, long click or double click. If no task is specified, the tile receives its default appearance and functionality.
+        <br /><br />
+        <b>Command</b> / <b>Long Click Command</b> / <b>Double Click Command</b>: instead of, or as well as, a task, send a Tasker command for that click type. The optional <b>Command Prefix</b> is sent along with the commands.
+        <br /><br />
+        <b>Status</b>: the visual state of the tile (Active, Inactive or Disabled) in a way defined by the system. A Disabled tile does not respond to clicks.
+        <br /><br />
+        <b>Label</b> / <b>Subtitle</b> / <b>Icon</b>: customise how the tile looks. The Subtitle is only shown on Android 10 and later.
+        <br /><br />
+        <b>Can Use On Locked Device</b>: when off, clicking the tile on a locked device first asks the user to unlock and then runs the task. The Long Click task will not work on a locked device due to an Android limitation. Unfortunately there's no way to make it work.
+        <br /><br />
+        <b>Hide Notification Shade</b>: when on, the pulled-down panel is closed automatically after the tile is clicked.
+        <br /><br />
+        The effects of this action are only visible once the tile has been added to the set of used tiles via the Android UI.
+        <br /><br />
+        Requires Android 7.0 or later.
+        <br /><br />
+        See Also: Clear Quick Setting Tile, Prefs / Action / Quick Settings Tasks.
+    </P>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		.input {}
+
+		.input .title {
+			font-size: 110%;
+			font-weight: bold;
+			margin-top: 24px;
+		}
+
+		.input .text {
+			margin-top: 8px;
+		}
+
+		.grave_danger {
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body><h4><span class="name">Update Scene V2 Overlay</span></h4>
+	<p>
+		Update the overlay configuration of a currently visible Scene V2 that was shown in <b>Overlay</b> mode.
+	</p>
+	<p>
+		This action lets you change the overlay's position, size, and blocking behavior after it has been shown.
+	</p>
+	<p>
+		<b>Screen ID</b> is required and must match the ID of the overlay scene you want to update.
+	</p>
+	<p>
+		Set <b>X Position</b> and <b>Y Position</b> to move the overlay to a new position on screen. Values can be:
+	</p>
+	<ul>
+		<li>A positive number (e.g. <b>100</b>) — the overlay's left/top edge is placed that many dp from the left/top of the screen.</li>
+		<li>A negative number (e.g. <b>-20</b>) — the overlay's right/bottom edge is placed that many dp from the right/bottom of the screen.</li>
+		<li>A positive percentage (e.g. <b>50%</b>) — centers the overlay at that percentage from the left/top.</li>
+		<li>A negative percentage (e.g. <b>-50%</b>) — centers the overlay at that percentage from the right/bottom.</li>
+	</ul>
+	<p>
+		Set <b>Width</b> and <b>Height</b> to resize the overlay. Values can be a number in dp (e.g. <b>200</b>) or a percentage of the screen size (e.g. <b>50%</b>).
+	</p>
+	<p>
+		Set <b>Blocking</b> to control whether the overlay intercepts touch events or lets them pass through to the apps behind it.
+	</p>
+	<p>
+		Set <b>Transition Duration (ms)</b> to animate the changes smoothly over the specified number of milliseconds (default is 400ms). Set <b>Transition Easing</b> to choose the animation curve.
+	</p>
+	<p>
+		Only the fields you fill in will be updated. Leave a field empty to keep its current value.
+	</p>
+	<p>
+		Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.
+	</p>
+</body>
+
+</html>

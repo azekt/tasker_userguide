@@ -1,0 +1,67 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		.input {}
+
+		.input .title {
+			font-size: 110%;
+			font-weight: bold;
+			margin-top: 24px;
+		}
+
+		.input .text {
+			margin-top: 8px;
+		}
+
+		.grave_danger {
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body><h4><span class="name">Show Scene V2</span></h4>
+	<p>
+		Show a Scene V2 on screen. You can pick a previously created scene by name or provide raw JSON directly.
+	</p>
+	<p>
+		Scenes can be displayed in 3 modes: <b>Fullscreen</b> (takes over the whole screen), <b>Dialog</b> (centered window) or <b>Overlay</b> (floating window on top of other apps).
+	</p>
+	<p>
+		In <b>Overlay</b> mode you can configure the position (<b>X Position</b>, <b>Y Position</b>), size (<b>Width</b>, <b>Height</b>), whether it is <b>Blocking</b> (intercepts touches) or passthrough, and enter/exit animations.
+	</p>
+	<p>
+		<b>X Position</b> and <b>Y Position</b> accept the following value formats:
+	</p>
+	<ul>
+		<li>A positive number like <b>100</b> — the overlay's left/top edge is placed that many dp from the left/top of the screen. For example, an X of <b>100</b> places the overlay's left edge 100dp from the left of the screen.</li>
+		<li>A negative number like <b>-20</b> — the overlay's right/bottom edge is placed that many dp from the right/bottom of the screen. For example, an X of <b>-20</b> places the overlay's right edge 20dp from the right of the screen, and a Y of <b>-0</b> places the overlay's bottom edge flush against the bottom.</li>
+		<li>A positive percentage like <b>50%</b> — centers the overlay at that percentage from the left/top. For example, an X of <b>50%</b> centers the overlay horizontally on screen.</li>
+		<li>A negative percentage like <b>-25%</b> — centers the overlay at that percentage from the right/bottom. For example, a Y of <b>-25%</b> centers the overlay vertically at 25% from the bottom of the screen.</li>
+	</ul>
+	<p>
+		<b>Width</b> and <b>Height</b> accept a number in dp (e.g. <b>200</b>) or a percentage of the screen size (e.g. <b>50%</b>).
+	</p>
+	<p>
+		If <b>Continue Task Immediately</b> is disabled, the task will wait until the scene is dismissed before continuing. The scene's dismiss result will be returned in the output variables shown in the action's configuration.
+	</p>
+	<p>
+		Use <b>Screen ID</b> to give the scene a custom identifier. This ID can then be used in other Scene V2 actions (Update, Dismiss, etc.) to target this specific scene. If left empty, the scene's own name is used as the ID.
+	</p>
+	<p>
+		Use <b>Auto Dismiss (ms)</b> to automatically dismiss the scene after a specified number of milliseconds.
+	</p>
+	<p>
+		Enable <b>Show Over Everything</b> (requires the Tasker Accessibility Service) to show overlays on top of all apps, including the lock screen and status bar.
+	</p>
+	<p>
+		Enable <b>Long Click Root To Dismiss</b> to be able to dismiss an overlay by long-clicking on the root element. This is useful as a safety net so overlays are never stuck on screen.
+	</p>
+	<p>
+		Check <a href="../scenes_v2.html">Scenes V2 (Screen Builder) Manual</a> for full details on how Scenes V2 work.
+	</p>
+</body>
+
+</html>

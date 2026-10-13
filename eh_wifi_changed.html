@@ -1,0 +1,53 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+	.input .title{
+		font-size: 110%;
+		font-weight: bold;
+		margin-top: 24px;
+	}
+	.input .text{
+		margin: 4px;
+	}
+	code{
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+	<H3>Wifi Changed</H3>
+	<P>Triggers whenever the state of Wi-Fi changes: when the Wi-Fi radio is switched on or off, or when the device connects to or disconnects from a Wi-Fi network.</P>
+	<P>There are four kinds of change:</P>
+	<ul>
+		<li><code>enabled</code> - the Wi-Fi radio was turned on</li>
+		<li><code>disabled</code> - the Wi-Fi radio was turned off</li>
+		<li><code>connected</code> - the device joined a Wi-Fi network</li>
+		<li><code>disconnected</code> - the device left a Wi-Fi network</li>
+	</ul>
+	<P>Requires Android 7.0 (Nougat) or later.</P>
+
+	<DIV class="inputs">
+		<div class="input">
+			<div class="title">State</div>
+			<div class="text">Restrict the event to only certain changes.</div>
+			<div class="text">Enter one or more of <code>enabled</code>, <code>disabled</code>, <code>connected</code> or <code>disconnected</code>, separated by <code>/</code> to match several at once (for example <code>connected/disconnected</code>).</div>
+			<div class="text">Leave empty to trigger on every change. <a href="https://tasker.joaoapps.com/userguide/en/matching.html">Pattern matching</a> is supported.</div>
+		</div>
+		<div class="input">
+			<div class="title">Get SSID</div>
+			<div class="text">When enabled, Tasker reads the SSID and MAC address (BSSID) of the connected network and reveals the <b>SSID</b> and <b>MAC</b> fields below, letting you restrict the event to specific networks.</div>
+			<div class="text">Looking up the network details requires the Location permission.</div>
+		</div>
+		<div class="input">
+			<div class="title">SSID</div>
+			<div class="text">Only available when <b>Get SSID</b> is enabled.</div>
+			<div class="text">Only trigger when the connected network's name matches. Separate multiple names with <code>/</code>, or leave empty to match any network.</div>
+		</div>
+		<div class="input">
+			<div class="title">MAC</div>
+			<div class="text">Only available when <b>Get SSID</b> is enabled.</div>
+			<div class="text">Like <b>SSID</b>, but matches the access point's MAC address (BSSID) instead of its name.</div>
+		</div>
+	</DIV>
+</body>
+</html>
